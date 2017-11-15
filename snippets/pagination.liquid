@@ -1,0 +1,8 @@
+<div class="pagination">
+	{% capture arrow_next %} <span aria-label="{{ 'general.paginate.next_page' | t }}"> {% include 'asset_svg' with 'arrow_icon_smaller' %}</span> {% endcapture %}
+	{% capture arrow_prev %} <span aria-label="{{ 'general.paginate.previous_page' | t }}"> {% include 'asset_svg' with 'arrow_icon_smaller' %}</span> {% endcapture %}
+  {{ paginate | default_pagination | replace: '&laquo; Previous', arrow_prev | replace: 'Next &raquo;', arrow_next }}
+</div>
+{% if paginate.next.is_link %}
+    <a class="next-page hidden" href="{{ paginate.next.url }}">{{ paginate.next.title }}</a>
+{% endif %}

@@ -1,0 +1,140 @@
+{% assign per_page = section.settings.home_collection_no | times: 1 %}
+
+{% assign product_count = collections[section.settings.home_collection_select].products_count | times: 1 %}
+
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen {% if per_page == 4 %} box--can-stick {% endif %} per-{{ per_page }}">
+
+  {% if per_page == 4 %}
+    {% assign size_class = 'box--big lap--box--small-fl box--typo-big' %}
+  {% else %}
+    {% assign size_class = 'box--small lap--box--small-lg box--typo-small' %}
+  {% endif %}
+
+  {% if section.settings.title != '' %}
+    <div class="site-box box__heading no-bottom-padding" data-order="0">
+
+      <div class="site-box-content">
+
+          <h2 class="title">
+            {{ section.settings.title | escape }}
+          </h2>
+
+  {% comment %}        {% if product_count == 0 and per_page == 4 %}
+            <!-- blank -->
+          {% else %}
+
+            {% if per_page == 4 %}
+              <a class="button" href="{{ collections[section.settings.home_collection_select].url | escape }}">{{ 'general.shop_now' | t }}</a>
+            {% else %}
+              <p>{{ 'general.shop_now' | t }}</p>
+            {% endif %}
+
+          {% endif %}{% endcomment %}
+
+      </div>
+
+    </div>
+  {% endif %}
+
+  <div class="collections-container">
+
+    {% if product_count == 0 %}
+
+      {% assign per_page = per_page | plus: 1 %}
+      {% for i in (1..per_page) %}
+        <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+          <div class="site-box-content">
+            {% assign no = forloop.index | modulo:6 | plus:1 %}
+            {% capture product_img %} {{ 'svg_product-X.svg' | replace: 'X', no | asset_url }} {% endcapture %}
+            {% include 'collection_product-blank' with product_img %}
+          </div>
+        </div>
+      {% endfor %}
+
+    {% else %}
+
+      {% for product in collections[section.settings.home_collection_select].products limit:per_page %}
+        <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+          <div class="site-box-content">
+            {% include 'collection_product-content' %}
+          </div>
+        </div>
+      {% endfor %}
+
+      {% if product_count > per_page or section.settings.home_add_link %}
+        <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--center-align box--column-flow box__heading no-bottom-padding">
+          <div class="site-box-content">
+            <span class="title">
+              {% if section.settings.home_add_link and section.settings.home_link %}
+                <a href="{{ section.settings.home_link }}"><span>{{ section.settings.home_text }}</span></a>
+              {% else %}
+                <a href="{{ collections[section.settings.home_collection_select].url }}"><span>{{ 'collections.general.want_more' | t }}</span></a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "class": "index-section mount-products mount-images",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "collection",
+        "id": "home_collection_select",
+        "label": "Collection"
+      },
+      {
+        "type": "select",
+        "id": "home_collection_no",
+        "label": "Number of products",
+        "options": [
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "8",
+            "label": "8"
+          },
+          {
+            "value": "12",
+            "label": "12"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "home_add_link",
+        "label": "Use custom link?"
+      },
+      {
+        "type": "text",
+        "id": "home_text",
+        "label": "Label"
+      },
+      {
+        "type": "text",
+        "id": "home_link",
+        "label": "Link"
+      }
+    ],
+    "presets": [{
+      "name": "Featured collection",
+      "category": "Collection"
+    }]
+  }
+{% endschema %}

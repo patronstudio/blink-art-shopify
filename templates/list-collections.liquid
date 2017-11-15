@@ -1,0 +1,31 @@
+<div class="shopify-section">
+
+  <div id="section-collections" class="site-box-container container--fullscreen">
+
+    <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading box--add-hr" data-order="0">
+
+      <div class="site-box-content fix-me-with-margin">
+            
+        <h1 class="title">{{ 'collections.general.all_collections' | t }}</h1>
+
+      </div>
+
+    </div>
+
+    {% for collection in collections %}
+
+      {% unless collection.handle == 'frontpage' %}
+
+         <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+            <div class="site-box-content">
+              {% include 'collection_collection-content' %}
+            </div>
+          </div>
+
+      {% endunless %}
+
+    {% endfor %}
+
+  </div>
+
+</div>

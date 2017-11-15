@@ -1,0 +1,9 @@
+{% assign ajax_switch = search_bar %}
+<form action="/search" method="get" class="input-group search-bar {{ ajax_switch }}" role="search" autocomplete="off">
+  <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}" autocomplete="off">
+  <span class="input-group-btn">
+    <button type="submit" class="btn icon-fallback-text" aria-label="{{ 'general.search.submit' | t }}">
+      <span class="icon icon-search" aria-hidden="true">{% include 'asset_svg' with 'search_icon' %}</span>
+    </button>
+  </span>
+</form>

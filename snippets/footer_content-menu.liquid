@@ -1,0 +1,18 @@
+<div class="footer-content site-box-content" {{ block.shopify_attributes }}>
+
+  {% if block.settings.title and block.settings.title != '' %}
+    <h4>{{ block.settings.title | escape }}</h4>
+  {% endif %}
+
+	<ul class="footer-links">
+    <li><a href="#search" class="footer-link js-site-search" aria-label="Open Search">Search</a></li>
+		{% for link in linklists[block.settings.footer_menu_select].links %}
+			<li><a class="footer-link" href="{{ link.url }}">{{ link.title }}</a></li>
+		{% endfor %}
+	</ul>
+
+{% comment %}  {% if block.settings.caption %}
+    <p class="caption">{{ block.settings.caption | escape }}</p>
+  {% endif %}{% endcomment %}
+
+</div>

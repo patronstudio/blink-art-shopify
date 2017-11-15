@@ -1,0 +1,90 @@
+{% assign type = cart_form %}
+<form action="/cart" method="post" novalidate class="cart" id="site-cart-form-{{ type }}">
+
+  <div class="cart-items">
+
+    {% for item in cart.items %}
+
+      <div class="cart-item">
+
+        <a href="{{ item.url | within: collections.all }}" class="thumbnail">
+          <img src="{{ item | img_url: '200x240', crop: 'center' }}" alt="{{ item.title | escape }}">
+        </a>
+
+        <div class="content">
+
+          <a href="{{ item.url }}" class="title">
+            {{ item.product.title }}
+            <span>by {{ item.product.vendor }}</span>
+          </a>
+
+          {% unless item.variant.title contains 'Default' %}
+            <small>{{ item.variant.title }}</small>
+          {% endunless %}
+
+          {% assign property_size = item.properties | size %}
+          {% if property_size > 0 %}
+            {% for p in item.properties %}
+              {% unless p.last == blank %}
+                {{ p.first }}:
+                {% if p.last contains '/uploads/' %}
+                  <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                {% else %}
+                  {{ p.last }}
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+
+          <span class="price">{{ item.line_price | money }}</span>
+        </div>
+
+        {% if type == 'page' %}
+
+          <div class="actions">
+            <input class="qty" type="number" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" min="0" aria-label="{{ 'product.quantity' | t }}">
+            <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="remove" aria-label="{{ 'cart.remove_item' | t }}"><span aria-hidden="true">{% include 'asset_svg' with 'close_icon' %}</span></a>
+          </div>
+
+        {% else %}
+
+          <div>
+            <span class="no-qty">x{{ item.quantity }}</span>
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+  {% if settings.cart_notes_enable %}
+    <textarea name="note" id="cartSpecialInstructions" placeholder="{{ 'cart.note' | t }}" aria-label="{{ 'cart.note' | t }}">{{ cart.note }}</textarea>
+  {% endif %}
+
+  <div class="cart-out">
+
+    <p class="total" id="CartTotal">{{ 'cart.total' | t }} <span>{{ cart.total_price | money }}</span></p>
+    <small>{{ 'cart.shipping_at_checkout' | t }}</small>
+
+    <div>
+
+      {% if type == 'page' %}
+        <button name="update" class="button outline less-padding" style="margin-right: 10px; position: relative;" aria-label="{{ 'cart.update_cart' | t }}">{% include 'asset_svg' with 'reload_icon' %}</button>
+      {% else %}
+        <button class="button accent" style="margin-right: 10px;">{{ 'sidebar.cart.view_cart' | t }}</button>
+      {% endif %}
+
+      <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+
+      {% if additional_checkout_buttons %}
+        <div class="add-buttons">{{ content_for_additional_checkout_buttons }}</div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</form>

@@ -1,0 +1,106 @@
+<div class="shopify-section">
+  
+  <div id="section-search" class="site-box-container container--fullscreen box--can-stick">
+
+    <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading box--add-hr" data-order="0">
+
+      <div class="site-box-content fix-me-with-margin">
+            
+        <h1 class="title">
+          {{ 'general.search.title' | t }}
+        </h1>
+
+      </div>
+
+    </div> 
+
+    <div class="site-box box--big lap--box--bigger box__text box--typo-big box--center-align box--column-flow" data-order="1">
+
+      <div class="site-box-content fix-me-with-margin">
+
+        {% paginate search.results by 5 %}
+
+          <div class="search-results {% if search.performed %} with-results {% endif %}">
+
+            {% if search.performed %}
+
+              <p class="search-results-title">{{ 'general.search.results_for_html' | t: terms: search.terms, count: search.results_count }}</h1>
+              
+              <div class="results">
+
+                {% for item in search.results %}
+
+                  <a class="search-item" href="{{ item.url }}" title="{{ item.title | escape }}">
+
+                    {% if item.featured_image or item.image %}
+
+                      <div class="thumbnail">
+                        <img src="{{ item | img_url: '200x240', crop: 'center' }}" alt="{{ item.title | escape }}">
+                      </div>
+
+                    {% elsif item.object_type == 'page' and item.content contains '<img' %}
+
+                      {% assign src = item.content | split: 'src="' %}
+                      {% assign src = src[1] | split: '"' | first %}
+                      <div class="thumbnail" style="background-image: url({{ src }}); background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
+
+                    {% else %}
+
+                      <div class="thumbnail no-image"></div>
+
+                    {% endif %}
+
+                    <div class="content">
+
+                      <h3 class="title">{{ item.title }}</h3>
+
+                      {% if item.object_type == 'product' %}
+
+                        <span class="caption">
+                          {{ item.price | money }}
+                        </span>
+
+                      {% elsif item.object_type == 'page' %}
+
+                        <span class="caption">
+                          {{ item.content | strip_html | truncatewords: 10 | escape }}
+                        </span>
+
+                      {% elsif item.object_type =='article' %}
+        
+                        <span class="caption">
+                          {% capture date_format %} {{ 'general.date_format' | t }} {% endcapture %}
+                          {{ item.published_at | time_tag: date_format }}
+                        </span>
+
+                      {% endif %}
+
+                      <span class="type">{{ item.object_type }}</span>
+
+                    </div>
+
+                  </a>
+
+              {% endfor %}
+
+            {% else %}
+              
+              {% include 'search_bar' with 'no-ajax' %}
+
+            {% endif %}
+
+            {% if paginate.pages > 1 %}
+              {% include 'pagination' %}
+            {% endif %}
+
+          </div>
+
+        {% endpaginate %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

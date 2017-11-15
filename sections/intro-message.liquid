@@ -1,0 +1,25 @@
+{% if section.settings.intro_message_enable %}
+  <div class="intro-message">
+    {{ section.settings.intro_message }}
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Intro Message",
+    "class": "intro-message",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "intro_message_enable",
+        "label": "Enable Intro Message",
+        "default": true
+      },
+      {
+        "type": "richtext",
+        "id": "intro_message",
+        "label": "Intro Message"
+      }
+    ]
+  }
+{% endschema %}

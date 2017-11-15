@@ -1,0 +1,95 @@
+{% if section.blocks.size > 0 %}
+
+  <div id="section-{{ section.id }}" class="site-box-container container--fullscreen">
+
+    <div class="site-box box--bigger box--center-align box--column-flow box--no-padding box__slideshow-split back-to-normal">
+      <div class="site-box-content responsive-flickity">
+        {% for block in section.blocks %}
+          {% include 'slideshow_content' %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <style type="text/css">
+
+    @media  screen and (min-width: 768px), screen and (min-width: 1024px) and (orientation: landscape) {
+
+      .shopify-section .site-box.box__slideshow-split .slideshow-item .site-box {
+        background: {{ section.settings.slide_bg }};
+        color: {{ section.settings.slide_text }};
+      }
+      .shopify-section .site-box.box__slideshow-split .slideshow-item .site-box .button svg path {
+        fill: {{ section.settings.slide_bg }} !important;
+      }
+      .shopify-section .site-box.box__slideshow-split .slider-meta {
+        color: {{ section.settings.slide_text }};
+      }
+      .shopify-section .site-box.box__slideshow-split .slider-meta svg polygon {
+        fill: {{ section.settings.slide_text }} !important;
+      }
+
+    }
+
+  </style>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Slideshow",
+    "class": "mount-slideshow mount-images",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "type": "color",
+        "id": "slide_bg",
+        "label": "Background",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "color",
+        "id": "slide_text",
+        "label": "Text",
+        "default": "#ffffff"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Slide Heading"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption",
+            "default": "Welcome customers to your store"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subheading",
+            "default": "Showcase your best products"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

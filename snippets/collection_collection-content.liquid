@@ -1,0 +1,26 @@
+<a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}" class="product-item style--{{ settings.product_animation }}">
+
+  {% if collection.image %}
+    {% assign collection_image = collection.image %}
+  {% elsif collection.products.first != blank %}
+    {% assign collection_image = collection.products.first %}
+  {% endif %}
+
+  {% assign crop_img_url_small = '480x' %}
+  {% assign crop_img_url_medium = '960x' %}
+  {% assign crop_img_url_large = '1440x' %}
+  {% assign crop_img_url_huge= '1920x' %}
+
+  <div class="box--product-image primary">
+    <img  src="{{ collection_image | img_url: crop_img_url_small }}" alt="{{ product.featured_image.alt | escape }}" data-srcset='{"small": "{{ collection_image | img_url: crop_img_url_small }}", "medium": "{{ collection_image | img_url: crop_img_url_medium }}", "large": "{{ collection_image | img_url: crop_img_url_large }}", "huge": "{{ collection_image | img_url: crop_img_url_huge }}"}' />
+  </div>
+
+  <div class="caption">
+    <div>
+      <h3><span class="overflowed">{{ collection.title }}</span></h3>
+      <span class="price"><span class="overflowed">{{ 'collections.general.view_products' | t }}</span></span>
+      <span aria-hidden="true">{% include 'asset_svg' with 'arrow_icon_long_overflowed' %}</span>
+    </div>
+  </div>
+
+</a>

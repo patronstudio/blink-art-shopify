@@ -1,0 +1,89 @@
+<h3 class="simple-title">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h3>
+{% capture date_format %} {{ 'general.date_format' | t }} {% endcapture %}
+
+{% paginate article.comments by 10 %}
+
+  {% if comment and comment.created_at %}
+    <p class="note form-success">
+      {% if blog.moderated? %}
+        {{ 'blogs.comments.success_moderated' | t }}
+      {% else %}
+        {{ 'blogs.comments.success' | t }}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if number_of_comments > 0 %}
+
+    <ul class="comments-list no-bullets">
+
+      {% for comment in article.comments %}
+
+        <li id="{{ comment.id }}" class="comment">
+
+          <div class="rte">
+            {{ comment.content }}
+          </div>
+
+          <span>
+            {% capture author %}<strong>{{ comment.author }}</strong>{% endcapture %}
+            {% capture date %}<strong><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: date_format }}</time></strong>{% endcapture %}
+            {{ 'blogs.article.comment_meta_html' | t: author: author, date: date }}
+          </span>
+
+        </li>
+
+      {% endfor %}
+
+    </ul>
+
+    {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+    {% endif %}
+
+  {% else %}
+
+    <p>{{ 'blogs.comments.no_comments' | t }}</p>
+
+  {% endif %}
+
+  <div class="form-vertical">
+  
+    {% form 'new_comment', article %}
+    
+      <h3 class="simple-title" id="AddCommentTitle">{{ 'blogs.comments.title' | t }}</h3>
+
+      {{ form.errors | default_errors }}
+
+      <div class="simple-grid">
+
+        <div class="grid__item one-half portable--one-whole">
+          <label for="CommentAuthor" class="hidden-label">{{ 'blogs.comments.name' | t }}</label>
+          <input type="text" name="comment[author]" id="CommentAuthor" class="input-full{% if form.errors contains 'author' %} error{% endif %}" placeholder="{{ 'blogs.comments.name' | t }}" value="{{ form.author }}" autocapitalize="words">
+        </div>
+
+        <div class="grid__item one-half portable--one-whole">
+          <label for="CommentEmail" class="hidden-label">{{ 'blogs.comments.email' | t }}</label>
+          <input type="email" name="comment[email]" id="CommentEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'blogs.comments.email' | t }}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+        </div>
+
+        <div class="grid__item">
+          <label for="CommentBody" class="hidden-label">{{ 'blogs.comments.message' | t }}</label>
+          <textarea name="comment[body]" id="CommentBody" class="input-full{% if form.errors contains 'body' %} error{% endif %}" placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>
+        </div>
+
+        <input type="submit" class="btn" value="{{ 'blogs.comments.submit' | t }}" style="margin-left: 15px; margin-top: -10px;">
+
+      </div>
+
+      {% if blog.moderated? %}
+        <p style="margin-top: 24px; opacity: .66;">{{ 'blogs.comments.moderated' | t }}</p>
+      {% endif %}
+
+    {% endform %}
+
+  </div>
+
+</div>
+
+{% endpaginate %}

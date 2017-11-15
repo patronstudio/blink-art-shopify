@@ -1,0 +1,156 @@
+<header id="site-header" class="site-header desktop-view--{{ section.settings.menu_style }} header-scroll">
+
+  <!-- logo -->
+
+  {% if template == 'index' %}
+    <h1 class="logo" itemscope itemtype="//schema.org/Organization">
+  {% else %}
+    <span class="logo" itemscope itemtype="//schema.org/Organization">
+  {% endif %}
+
+    {% if section.settings.logo_src %}
+
+      <a class="logo-img" href="/" itemprop="url">
+        <img src="{{ section.settings.logo_src | img_url: 'master' }}" alt="{{ shop.name }}" style="max-width: {{ section.settings.logo_width | escape }}px;" />
+      </a>
+
+    {% else %}
+
+      {% comment %}<a class="logo-txt" href="/" itemprop="url">{{ shop.name }}</a>{% endcomment %}
+
+      <a class="logo-img" href="/" itemprop="url">
+        <img src="{{ 'svg_logo.svg' | asset_url }}" alt="blink art logo" class="svg-logo">
+      </a>
+
+    {% endif %}
+
+  {% if template == 'index' %}
+    </h1>
+  {% else %}
+    </span>
+  {% endif %}
+
+  <!-- menu -->
+
+  <div id="site-nav--desktop" class="site-nav style--classic">
+
+    <div class="site-nav-container portable--hide">
+      <nav class="primary-menu">{% include 'header_nav-menu' with section.settings.menu_main_select %}</nav>
+    </div>
+
+    {% comment %} {% if template.name == 'collection' %}
+
+      <button id="site-filter-handle" class="site-filter-handle" aria-label="{{ 'general.navigation.open_filters' | t }}">
+        <span class="filter-menu" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </span>
+      </button>
+
+    {% endif %} {% endcomment %}
+
+    <span id="site-search-handle" class="site-search-handle" aria-label="{{ 'general.navigation.open_search' | t }}" title="{{ 'general.navigation.open_search' | t }}">
+
+      <a href="/search">
+        <span class="search-menu" aria-hidden="true">
+          {% include 'asset_svg' with 'search_icon' %}
+        </span>
+      </a>
+
+    </span>
+
+    <span id="site-cart-handle" class="site-cart-handle {{ settings.cart_action }}" aria-label="{{ 'general.navigation.open_cart' | t }}" title="{{ 'general.navigation.open_cart' | t }}">
+
+        <a href="/cart">
+          <span class="cart-menu" aria-hidden="true">
+            {% include 'asset_svg' with 'cart_icon' %}
+            {% comment %}<span class="count-holder"><span class="count">{{ cart.item_count }}</span></span>{% endcomment %}
+          </span>
+        </a>
+
+    </span>
+
+    <button id="site-menu-handle" class="site-menu-handle hide portable--show" aria-label="{{ 'general.navigation.open_menu' | t }}" title="{{ 'general.navigation.open_menu' | t }}">
+      <span class="hamburger-menu" aria-hidden="true"><span class="bar"></span></span>
+    </button>
+
+  </div>
+
+  <div class="sidebar-wrapper">
+    <div id="site-nav--mobile" class="site-nav style--sidebar">
+
+      {% include 'sidebar_content-menu' %}
+
+      {% if template.name == 'collection' %}
+        {% include 'sidebar_content-filters' %}
+      {% endif %}
+
+      {% include 'sidebar_content-cart' %}
+
+      {% include 'sidebar_content-search' %}
+
+      <button id="site-close-handle" class="site-close-handle" aria-label="{{ 'general.navigation.close_sidebar' | t }}" title="{{ 'general.navigation.close_sidebar' | t }}">
+        <span class="hamburger-menu active" aria-hidden="true"><span class="bar animate"></span></span>
+      </button>
+
+    </div>
+  </div>
+</header>
+
+{% schema %}
+  {
+    "name": "Header",
+    "class": "mount-header",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo_src",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo image width",
+        "unit": "px",
+        "min": 20,
+        "max": 400,
+        "step": 5,
+        "default": 100
+      },
+      {
+        "type": "link_list",
+        "id": "menu_main_select",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "select",
+        "id": "menu_style",
+        "label": "Desktop menu style",
+        "options": [
+          {
+            "value": "classic",
+            "label": "Classic"
+          },
+          {
+            "value": "minimal",
+            "label": "Minimal"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection_select",
+            "label": "Collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

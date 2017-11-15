@@ -1,0 +1,129 @@
+<div class="site-box-container container--fullscreen box--can-stick">
+
+{% comment %}  <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading {% unless section.settings.tags_enable %} box--add-hr {% endunless %}" data-order="0">
+
+    <div class="site-box-content fix-me-with-margin">
+
+      <h1 class="title">
+        {{ blog.title }}
+      </h1>
+
+      {% if section.settings.tags_enable %}
+
+        <div class="meta tags">
+          <a href="{{ blog.url }}"{% if current_tags == blank %} class="active"{% endif %}>{{ 'blogs.tags.all' | t }}</a>
+          {% for tag in blog.all_tags %}
+            {% if current_tags contains tag %}
+              <a href="{{ blog.url }}/tagged/{{ tag.handle }}" class="active">{{ tag | capitalize }}</a>
+            {% else %}
+              <a href="{{ blog.url }}/tagged/{{ tag.handle }}">{{ tag | capitalize }}</a>
+              {% endif %}
+          {% endfor %}
+        </div>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <div class="blog-tags">
+    <h1 class="title">
+      {{ blog.title }}
+    </h1>
+    {% if section.settings.tags_enable %}
+      <div class="meta tags">
+        <a href="{{ blog.url }}"{% if current_tags == blank %} class="active"{% endif %}>{{ 'blogs.tags.all' | t }}</a>
+        {% for tag in blog.all_tags %}
+          {% if current_tags contains tag %}
+            <a href="{{ blog.url }}/tagged/{{ tag.handle }}" class="active">{{ tag | capitalize }}</a>
+          {% else %}
+            <a href="{{ blog.url }}/tagged/{{ tag.handle }}">{{ tag | capitalize }}</a>
+            {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% endcomment %}
+  <div class="site-box box--bigger lap--box--bigger box--typo-big box--center-align box--column-flow box--no-padding box__blog scroll-movers-parent" data-order="1">
+    <div class="site-box-content">
+
+      {% assign blog_count = blog.articles_count | times: 1 %}
+
+      {% if blog_count == 0 %}
+
+        <div class="post onboard">
+            <p>{{ 'blogs.general.no_articles' | t }}</p>
+        </div>
+
+      {% else %}
+
+        {% paginate blog.articles by 10 %}
+
+          {% for article in blog.articles %}
+            {% include 'blog_post-content' %}
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+
+            <div class="blog-item paginate {% if paginate.previous.is_link and paginate.next.is_link %} double {% endif %}">
+
+              {% if paginate.previous.is_link %}
+                <a class="left" href="{{ paginate.previous.url }}" title="{{ 'general.paginate.previous_page' | t }}" aria-label="{{ 'general.paginate.previous_page' | t }}">
+                  <span aria-hidden="true" class="icon">{% include 'asset_svg' with 'arrow_icon_smaller' %}</span>
+                </a>
+              {% endif %}
+
+              {% if paginate.next.is_link %}
+                <a class="right" href="{{ paginate.next.url }}" title="{{ 'general.paginate.next_page' | t }}" aria-label="{{ 'general.paginate.next_page' | t }}">
+                  <span aria-hidden="true" class="icon">{% include 'asset_svg' with 'arrow_icon_smaller' %}</span>
+                </a>
+              {% endif %}
+
+            </div>
+
+          {% endif %}
+
+        {% endpaginate %}
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% if section.settings.rss_enable %}
+  <div class="site-sharing rss out-with-you">
+    <a href="{{ blog.url }}.atom" target="_blank" aria-label="{{ 'blogs.general.rss_feed' | t }}" title="{{ 'blogs.general.rss_feed' | t }}"><span aria-hidden="true">{% include 'asset_svg' with 'rss_icon' %}</span></a>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Blog",
+    "class": "mount-blog",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "meta_enable",
+        "default": true,
+        "label": "Show author, date and comments"
+      },
+      {
+        "type": "checkbox",
+        "id": "tags_enable",
+        "default": true,
+        "label": "Enable tag filtering"
+      },
+      {
+        "type": "checkbox",
+        "id": "rss_enable",
+        "default": true,
+        "label": "Show rss feed link"
+      }
+    ]
+  }
+{% endschema %}

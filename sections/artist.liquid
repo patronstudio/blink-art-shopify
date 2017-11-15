@@ -1,0 +1,35 @@
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen" data-handle="{{ collection.handle }}">
+  {% comment %}{% assign collection_no = 0 %}{% endcomment %}
+
+    {% for product in collection.products %}
+
+      {% comment %}{% assign collection_no = collection_no | plus: 1 %}{% endcomment %}
+
+      <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+        <div class="site-box-content">
+          {% include 'collection_product-content' %}
+        </div>
+      </div>
+
+    {% else %}
+
+      <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow" data-order="1">
+        <div class="site-box-content">
+          <div class="onboard" style="padding: 0 30px;">
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+    {% comment %}{% if paginate.pages > 1 and paginate.next %}
+      <div class="site-box box--small lap--box--small-lg box--center-align box--no-padding box--column-flow box__paginate">
+        <div class="site-box-content">
+          <a class="block-fade" href="{{ paginate.next.url }}" title="{{ paginate.next_page }}" aria-label="{{ paginate.next_page }}">
+            <span aria-hidden="true">{% include 'asset_svg' with 'plus_icon' %}</span>
+          </a>
+        </div>
+      </div>
+    {% endif %}{% endcomment %}
+</div>

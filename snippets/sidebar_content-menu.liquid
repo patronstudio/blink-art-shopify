@@ -1,0 +1,26 @@
+<div id="site-navigation" class="site-nav-container">
+
+  <div class="site-nav-container-last">
+
+    <p class="title">{{ 'sidebar.menu' | t }}</p>
+
+    <div class="top">
+
+      <nav class="primary-menu">{% include 'header_nav-menu' with section.settings.menu_main_select %}</nav>
+
+    </div>
+
+    <div class="to-bottom-content">
+
+      {% include 'header_footer-social' with 'regular' %}
+
+      <div class="site-copyright">
+        <p class="copy">{{ 'general.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></p>
+        {% comment %} <p class="powered">{{ powered_by_link }}</p> {% endcomment %}
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

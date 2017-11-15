@@ -1,0 +1,112 @@
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen social-media" data-twitter="{{ section.settings.name_twitter }}" data-instagram="{{ section.settings.name_instagram }}" data-posts="{{ section.settings.number }}">
+
+  {% assign posts = section.settings.number %}
+
+  {% if posts contains '4' %}
+    {% assign size_class = 'box--big box--typo-big' %}
+  {% else %}
+    {% assign size_class = 'box--small box--typo-small' %}
+  {% endif %}
+
+  <div class="site-box box__heading" data-order="0">
+
+    <div class="site-box-content">
+
+      <h2 class="title">{{ section.settings.title }}</h2>
+      {% unless section.settings.subtitle == blank %}
+        <p>{{ section.settings.subtitle }}</p>
+      {% endunless %}
+
+    </div>
+
+  </div>
+
+  <div class="social-media__container">
+    {% for i in (1..posts) %}
+
+      {% if section.settings.name_twitter != blank or section.settings.name_instagram != blank %}
+        <div class="site-box box--small lap--box--small-lg box--typo-small box--center-align box--column-flow" data-order="{{ i }}"></div>
+      {% else %}
+        {% if i < 5 %}
+          <div class="site-box box--small lap--box--small-lg box--typo-small box--center-align box--column-flow box__twitter" data-order="{{ i }}">
+            <div class="site-box-content">
+              <span class="icon" aria-hidden="true">{% include 'asset_svg' with 'twitter_icon' %}</span>
+              <p>This is a the content of a dummy tweet.</p>
+              <a>@twitter</a>
+            </div>
+          </div>
+        {% else %}
+          {% assign no = forloop.index | minus:1 %}
+          {% capture onboard_img %} {{ 'svg_collection-X.svg' | replace: 'X', no | asset_url }} {% endcapture %}
+          <div class="site-box box--small lap--box--small-lg box--typo-small box--center-align box--column-flow box__instagram" data-order="{{ i }}">
+            <div class="site-box-content" style="background-image:url({{ onboard_img }}); background-size: contain;">
+              <a>
+                <span class="icon child" aria-hidden="true">{% include 'asset_svg' with 'social_instagram' %}</span>
+                <p class="caption child">This is a dummy instagram post.</p>
+                <div class="meta child"><span class="likes">{% include 'asset_svg' with 'heart_icon' %}99</span>
+                <span class="time">9/9/99</span></div>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+
+    {% endfor %}
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Social feed",
+    "class": "index-section mount-social",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Social feed"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "Share your Twitter & Instagram feed"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "name_twitter",
+        "label": "Twitter username"
+      },
+      {
+        "type": "text",
+        "id": "name_instagram",
+        "label": "Instagram access token",
+        "info": "Generate it [here](http://krownthemes.com/instagram-access-token-generator/)"
+      },
+      {
+        "type": "select",
+        "id": "number",
+        "label": "Number of posts",
+        "options": [
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Social feed",
+      "category": "Social"
+    }]
+  }
+{% endschema %}

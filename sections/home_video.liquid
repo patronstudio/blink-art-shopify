@@ -1,0 +1,85 @@
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen">
+
+  <div class="site-box box--bigger box--typo-bigger lap--box--small-fl box--center-align box--column-flow box__video box__image-text button-true style--{{ section.settings.bg_style }} align--center">
+
+    <div class="site-box-content">
+
+      <div class="content">
+
+        {% unless section.settings.caption == blank %}
+          <p class="caption">{{ section.settings.caption | escape }}</p>
+        {% endunless %}
+
+        {% unless section.settings.title == blank %}
+          <h2 class="title">{{ section.settings.title | escape }}</h2>
+        {% endunless %}
+
+        {% unless section.settings.video_url == blank %}
+          <a class="video-lightbox popup-{{ section.settings.video_url.type }}" href="{{ section.settings.video_url }}" aria-label="{{ 'general.play_video' | t }}" title="{{ 'general.play_video' | t }}">
+            <span aria-hidden="true">{% include 'asset_svg' with 'icon_video_play' %}</span>
+          </a>
+        {% endunless %}
+
+      </div>
+
+    </div>
+
+    {% unless section.settings.bg_img == blank %}
+      <span class="site-box-background with-image" style="background-image: url({{ section.settings.bg_img | img_url: '1920x' }});" aria-hidden="true"></span>
+    {% endunless %}
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Video",
+    "class": "index-section mount-video",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Video title"
+      },
+      {
+        "type": "text",
+        "id": "caption",
+        "label": "Caption",
+        "default": "Share your brand's story"
+      },
+      {
+        "id": "video_url",
+        "type": "video_url",
+        "label": "Video URL",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_img",
+        "label": "Background image"
+      },
+      {
+        "type": "select",
+        "id": "bg_style",
+        "label": "Text color",
+        "options": [
+          {
+            "value": "light",
+            "label": "Dark"
+          },
+          {
+            "value": "dark",
+            "label": "Light"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Video",
+      "category": "Video"
+    }]
+  }
+{% endschema %}

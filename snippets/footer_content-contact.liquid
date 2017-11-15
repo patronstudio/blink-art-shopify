@@ -1,0 +1,21 @@
+<div class="footer-content site-box-content" {{ block.shopify_attributes }}>
+
+  {% if block.settings.title %}
+    <h4>{{ block.settings.title | escape }}</h4>
+  {% endif %}
+
+	{% unless block.settings.link == blank %}
+		<a href="{{ block.settings.link | escape }}" class="block-fade">
+	{% endunless %}
+
+		<span class="info">{{ block.settings.info | escape }}</span>
+
+	{% unless block.settings.link == blank %}
+		</a>
+	{% endunless %}
+
+  {% if block.settings.caption %}
+    <p class="caption">{{ block.settings.caption | escape }}</p>
+  {% endif %}
+
+</div>

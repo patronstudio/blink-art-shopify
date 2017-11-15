@@ -1,0 +1,16 @@
+{% assign product_img = collection_product-blank %}
+{% assign per_page = section.settings.home_collection_no | times: 1 %}
+
+<a href="#" class="product-item style--{{ settings.product_animation }} {% if per_page == 4 %} lap--box--small-lg {% endif %}">
+
+  <div class="box--product-image on primary" style="background-image: url({{ product_img | lstrip | rstrip }}); background-size: contain;"></div>
+
+  <div class="caption">
+    <div>
+      <h3><span class="overflowed">Your product's name</span></h3>
+      <span class="price"><span class="overflowed">{{ '99' | money }}</span></span>
+      {% include 'asset_svg' with 'arrow_icon_long_overflowed' %}
+    </div>
+  </div>
+
+</a>

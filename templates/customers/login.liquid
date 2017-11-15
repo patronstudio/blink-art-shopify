@@ -1,0 +1,101 @@
+<div class="shopify-section">
+
+  <div id="section-login" class="site-box-container container--fullscreen box--can-stick">
+
+    <div class="site-box box--big lap--box--small-fl box--typo-big box--lots-of-text box--center-align box--column-flow box__heading box--add-hr" data-order="0">
+      <div class="site-box-content fix-me-with-margin">
+        <h1 id="LoginRecoverTitle" class="title" data-password_recovery="{{ 'customer.recover_password.title' | t }}" data-login="{{ 'customer.login.title' | t }}">{{ 'customer.login.title' | t }}</h1>
+      </div>
+    </div>
+
+    <div class="site-box box--big lap--box--bigger box--center-align box--column-flow box__form" data-order="1">
+
+      <div class="site-box-content fix-me-with-margin">
+
+        <div class="note form-success" id="ResetSuccess" style="display:none;">
+          {{ 'customer.recover_password.success' | t }}
+        </div>
+
+        <div id="CustomerLoginForm" class="simple-grid">
+
+          {% form 'customer_login' %}
+
+            {{ form.errors | default_errors }}
+
+            <div class="grid__item one-whole">
+              <label for="CustomerEmail" class="hidden-label">{{ 'customer.login.email' | t }}</label>
+              <input type="email" name="customer[email]" id="CustomerEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.login.email' | t }}" autocorrect="off" autocapitalize="off" autofocus>
+            </div>
+
+            <div class="grid__item one-whole">
+              {% if form.password_needed %}
+                <label for="CustomerPassword" class="hidden-label">{{ 'customer.login.password' | t }}</label>
+                <input type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.login.password' | t }}">
+              {% endif %}
+            </div>
+
+            <div class="grid__item one-whole">
+
+              <input type="submit" class="button" value="{{ 'customer.login.sign_in' | t }}" style="margin-right: 25px;">
+
+              <div class="helper">
+                {% if form.password_needed %}
+                  <p style="margin-bottom: 0;"><a href="#recover" id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a></p>
+                {% endif %}
+                <p href="#"><span style="opacity: .62">{{ 'customer.login.new_customer' | t }}</span> {{ 'customer.login.sign_up' | t | customer_register_link }}</p>
+              </div>
+
+            </div>
+
+          {% endform %}
+
+        </div>
+
+        <div id="RecoverPasswordForm" style="display: none;">
+
+          <div class="simple-grid">
+
+            {% form 'recover_customer_password' %}
+
+              {{ form.errors | default_errors }}
+
+              {% if form.posted_successfully? %}
+                {% assign resetPassword = true %}
+              {% endif %}
+
+              <p class="grid__item one-whole caption">{{ 'customer.recover_password.subtext' | t }}</p>
+
+              <div class="grid__item one-whole">
+                <label for="RecoverEmail" class="hidden-label">{{ 'customer.recover_password.email' | t }}</label>
+                <input type="email" value="" name="email" id="RecoverEmail" class="input-full" placeholder="{{ 'customer.recover_password.email' | t }}" autocorrect="off" autocapitalize="off">
+              </div>
+
+              <div class="grid__item one-whole">
+                <input type="submit" class="button" value="{{ 'customer.recover_password.submit' | t }}">
+              </div>
+
+              <div class="grid__item one-whole push-a-bit">
+                <button type="button" id="HideRecoverPasswordLink" class="text-link">{{ 'customer.recover_password.cancel' | t }}</button>
+              </div>
+
+            {% endform %}
+
+          </div>
+
+        </div>
+
+        {% if shop.checkout.guest_login %}
+
+          {% form 'guest_login' %}
+            <input type="submit" class="button dark outline" value="{{ 'customer.login.guest_continue' | t }}">
+          {% endform %}
+
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

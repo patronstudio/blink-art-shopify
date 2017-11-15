@@ -1,0 +1,169 @@
+<div class="shopify-section">
+  {% section 'intro-message' %}
+  {% section 'product' %}
+</div>
+
+{% unless product.empty? %}
+  <script type="application/json" id="ProductJson">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+<script type="text/javascript">
+
+	window.shop_money_format = "{{ shop.money_format }}";
+
+	window.product_words_add_to_cart_button = "{{ 'product.add_to_cart' | t }}";
+	window.product_words_sold_out_variant = "{{ 'product.inventory.sold_out_variant' | t }}";
+	window.product_words_unavailable_variant = "{{ 'product.inventory.unavailable_variant' | t }}";
+	window.product_words_one_product = "{{ 'product.inventory.one_product' | t }}";
+	window.product_words_few_products = "{{ 'product.inventory.few_products' | t }}";
+	window.product_words_no_products = "{{ 'product.inventory.no_products' | t }}";
+  window.product_words_preorder = "{{ 'product.inventory.preoder' | t }}";
+
+</script>
+
+<script type="text/javascript">
+
+// (c) Copyright 2016 Caroline Schnapp. All Rights Reserved. Contact: mllegeorgesand@gmail.com
+// See https://docs.shopify.com/themes/customization/navigation/link-product-options-in-menus
+
+var Shopify = Shopify || {};
+
+Shopify.arrayIncludes = function(e, t) {
+  for (var n = 0; n < e.length; n++)
+      if (e[n] == t) return !0;
+  return !1
+}, Shopify.uniq = function(e) {
+    for (var t = [], n = 0; n < e.length; n++) Shopify.arrayIncludes(t, e[n]) || t.push(e[n]);
+    return t
+}
+
+Shopify.optionsMap = {};
+
+Shopify.updateOptionsInSelector = function(selectorIndex) {
+
+  switch (selectorIndex) {
+    case 0:
+      var key = 'root';
+      var selector = jQuery('.product-variant:eq(0) .product-variants');
+      break;
+    case 1:
+      var key = jQuery('.product-variant:eq(0) .product-variants').val();
+      var selector = jQuery('.product-variant:eq(1) .product-variants');
+      break;
+    case 2:
+      var key = jQuery('.product-variant:eq(0) .product-variants').val();
+      key += ' / ' + jQuery('.product-variant:eq(1) .product-variants').val();
+      var selector = jQuery('.product-variant:eq(2) .product-variants');
+  }
+
+  var initialValue = selector.val();
+  selector.empty();
+  var availableOptions = Shopify.optionsMap[key];
+
+  selector.find('option').each(function(){
+  	$(this).removeAttr('disabled', 'disabled');
+  	if ( ! $.inArray($(this).val(), availableOptions) ) {
+  		$(this).attr('disabled', 'disabled')
+  	}
+  })
+
+  if ( availableOptions ) {
+    for (var i=0; i<availableOptions.length; i++) {
+      var option = availableOptions[i];
+      var newOption = jQuery('<option></option>').val(option).html(option);
+      selector.append(newOption);
+    }
+  }
+
+ 	selector.parent().find('ul li').each(function(){
+ 		$(this).removeClass('disabled');
+ 		if ( $.inArray($(this).text(), availableOptions) === -1 ) {
+ 			$(this).addClass('disabled');
+ 		}
+  });
+
+  jQuery('.swatch[data-option-index="' + selectorIndex + '"] .swatch-element').each(function() {
+    if (jQuery.inArray($(this).attr('data-value'), availableOptions) !== -1) {
+      $(this).removeClass('soldout').show().find(':radio').removeAttr('disabled','disabled').removeAttr('checked');
+    }
+    else {
+      $(this).addClass('soldout').hide().find(':radio').removeAttr('checked').attr('disabled','disabled');
+    }
+  });
+  if (jQuery.inArray(initialValue, availableOptions) !== -1) {
+    selector.val(initialValue);
+  }
+  selector.trigger('change');
+
+};
+
+Shopify.linkOptionSelectors = function(product) {
+  // Building our mapping object.
+  for (var i=0; i<product.variants.length; i++) {
+    var variant = product.variants[i];
+    if (variant.available) {
+      // Gathering values for the 1st drop-down.
+      Shopify.optionsMap['root'] = Shopify.optionsMap['root'] || [];
+      Shopify.optionsMap['root'].push(variant.option1);
+      Shopify.optionsMap['root'] = Shopify.uniq(Shopify.optionsMap['root']);
+      // Gathering values for the 2nd drop-down.
+      if (product.options.length > 1) {
+        var key = variant.option1;
+        Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+        Shopify.optionsMap[key].push(variant.option2);
+        Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+      }
+      // Gathering values for the 3rd drop-down.
+      if (product.options.length === 3) {
+        var key = variant.option1 + ' / ' + variant.option2;
+        Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+        Shopify.optionsMap[key].push(variant.option3);
+        Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+      }
+    }
+  }
+  // Update options right away.
+  Shopify.updateOptionsInSelector(0);
+  if (product.options.length > 1) Shopify.updateOptionsInSelector(1);
+  if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+  // When there is an update in the first dropdown.
+  jQuery(".product-variant:eq(0) .product-variants").change(function() {
+    Shopify.updateOptionsInSelector(1);
+    if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+    return true;
+  });
+  // When there is an update in the second dropdown.
+  jQuery(".product-variant:eq(1) .product-variants").change(function() {
+    if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+    return true;
+  });
+};
+
+window.advancedOptionsSelector = function(forceMutation) {
+  var forceMutation = forceMutation || false;
+  var $addToCartForm = $('#add-to-cart');
+  if (window.MutationObserver && $addToCartForm.length) {
+    if (typeof observer === 'object' && typeof observer.disconnect === 'function') {
+      observer.disconnect();
+    }
+    var config = { childList: true, subtree: true };
+    var observer = new MutationObserver(function() {
+      Shopify.linkOptionSelectors({{ product | json }});
+      observer.disconnect();
+    });
+    if ( forceMutation ) {
+      Shopify.linkOptionSelectors({{ product | json }});
+    }
+    observer.observe($addToCartForm[0], config);
+  }
+}
+
+{% if product.available %}
+  window.advancedOptionsSelector();
+{% else %}
+  window.disableProductVariants = true;
+{% endif %}
+
+</script>

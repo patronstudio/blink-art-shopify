@@ -1,0 +1,158 @@
+<div id="site-footer" class="site-footer site-box-container container--fullscreen">
+
+  {% if section.blocks.size < 3 %}
+
+    <div class="footer-box box--bigger lap--box--bigger box__footer">
+
+      {% for block in section.blocks %}
+        {% capture footer_block %}{{ 'footer_content-' | append: block.type }}{% endcapture %}
+        {% include footer_block %}
+      {% endfor %}
+
+{% comment %}      <p class="site-copyright to-bottom-content">
+        <span>{{ 'general.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></span>
+        <span>{{ powered_by_link }}</span>
+      </p>{% endcomment %}
+
+    </div>
+
+  {% else %}
+
+      {% for block in section.blocks %}
+        {% capture footer_block %}{{ 'footer_content-' | append: block.type }}{% endcapture %}
+        {% include footer_block %}
+{% comment %}
+        {% if forloop.index == 2 or forloop.last == true %}
+          {% if forloop.index == 2 %}
+            <p class="site-copyright to-bottom-content lap--hide">{{ 'general.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></p>
+          {% else %}
+            <p class="site-copyright to-bottom-content"><span class="hide lap--show">{{ 'general.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></span><span>{{ powered_by_link }}</span></p>
+          {% endif %}
+          </div>
+        {% endif %}{% endcomment %}
+
+      {% endfor %}
+
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "class": "mount-footer",
+    "max_blocks": 5,
+    "blocks": [
+      {
+        "type": "contact",
+        "name": "Contact information",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Contact information"
+          },
+          {
+            "type": "text",
+            "id": "info",
+            "label": "Information",
+            "default": "email@shopify.com"
+          },
+          {
+            "type": "text",
+            "id": "link",
+            "label": "Information link",
+            "info": "Optional"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption",
+            "default": "Invite customers to get in touch with you"
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Footer menu"
+          },
+          {
+            "type": "link_list",
+            "id": "footer_menu_select",
+            "label": "Menu",
+            "default": "footer",
+            "info": "This menu won't show dropdown items"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption"
+          }
+        ]
+      },
+      {
+        "type": "social",
+        "name": "Social links",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Social links"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption",
+            "default": "Invite customers to follow you on social networks"
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "name": "Newsletter",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Newsletter"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption",
+            "default": "Invite customers to join you newsletter"
+          }
+        ]
+      },
+      {
+        "type": "payment",
+        "name": "Supported payment methods",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Supported payment methods"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

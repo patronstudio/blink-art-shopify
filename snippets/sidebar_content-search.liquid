@@ -1,0 +1,19 @@
+<div id="site-search" class="site-nav-container" tabindex="-1">
+
+  <div class="site-nav-container-last">
+
+    <p class="title">{{ 'sidebar.search' | t }}</p>
+
+    {% include 'search_bar' with 'ajax' %}
+
+    <div class="top">
+		
+			<div class="preloader" aria-hidden="true"><span>.</span><span>.</span><span>.</span></div>
+
+      <div id="search-results" class="search-results"></div>
+
+    </div>
+
+  </div>
+
+</div>

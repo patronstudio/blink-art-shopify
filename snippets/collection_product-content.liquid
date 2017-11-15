@@ -1,0 +1,57 @@
+{% assign per_page = section.settings.home_collection_no | times: 1 %}
+
+<a href="{{ product.url | within: collection }}" class="product-item style--{{ settings.product_animation }} {% if per_page == 4 %} lap--box--small-lg {% endif %}">
+
+  {% assign crop_img_url_small = '480x' %}
+  {% assign crop_img_url_medium = '960x' %}
+  {% assign crop_img_url_large = '1440x' %}
+  {% assign crop_img_url_huge= '1920x' %}
+
+  <div class="box--product-image primary">
+    <img  src="{{ product.featured_image.src | img_url: crop_img_url_small }}" alt="{{ product.featured_image.alt | escape }}" data-srcset='{"small": "{{ product.featured_image.src | img_url: crop_img_url_small }}", "medium": "{{ product.featured_image.src | img_url: crop_img_url_medium }}", "large": "{{ product.featured_image.src | img_url: crop_img_url_large }}", "huge": "{{ product.featured_image.src | img_url: crop_img_url_huge }}"}' />
+  </div>
+
+  {% if settings.product_show_secondary and product.images.size >= 2 %}
+    <div class="box--product-image secondary">
+      <img  src="{{ product.images[1].src | img_url: crop_img_url_small }}" alt="{{ product.images[1].alt | escape }}" data-srcset='{"small": "{{ product.images[1].src | img_url: crop_img_url_small }}", "medium": "{{ product.images[1].src | img_url: crop_img_url_medium }}", "large": "{{ product.images[1].src | img_url: crop_img_url_large }}", "huge": "{{ product.images[1].src | img_url: crop_img_url_huge }}"}' />
+    </div>
+  {% endif %}
+
+  </div>
+
+  {% include 'product_badges' %}
+
+</a>
+
+<div class="caption">
+  <div>
+    {% assign title = product.title | split: '|' %}
+    <h3><span class="overflowed">{{ title[0] }}</span></h3>
+    {% if title[1] %}
+      <h4 class="caption__artist">by {{ title[1] }}</h4>
+    {% endif %}
+    <span class="price"><span class="overflowed">
+
+      {% capture price %} {{ product.price | money }} {% endcapture %}
+
+      {% if product.price_varies %}
+
+        {% if product.compare_at_price > product.price %}
+          {{ 'product.on_sale_from_html' | t: price: price }}
+        {% else %}
+          {{ 'product.from_text_html' | t: price: price }}
+        {% endif %}
+
+      {% else %}
+
+        {% if product.compare_at_price > product.price %}
+          {{ price }} <del>{{ product.compare_at_price | money }}</del>
+        {% else %}
+          {{ price }}
+        {% endif %}
+
+      {% endif %}
+
+    </span></span>
+    {% comment %}<span aria-hidden="true">{% include 'asset_svg' with 'arrow_icon_long_overflowed' %}</span>{% endcomment %}
+  </div>

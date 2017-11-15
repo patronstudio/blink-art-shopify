@@ -1,0 +1,95 @@
+<div id="site-filters" class="site-nav-container" tabindex="-1">
+
+  <div class="site-nav-container-last">
+
+  	<p class="title">{{ 'sidebar.collection_filters.title' | t }}</p>
+  	<p class="subtitle">{{ 'sidebar.collection_filters.items_count' | t: count: collection.products.size, collection: collection.title }}</p> 
+
+    <div class="top">
+
+      <div class="option filter-by-tags">
+				<label for="filter-by">{{ 'collections.filtering.title' | t }}</label>
+				<select name="filter-by" class="filter-by">
+			    	<option value="">{{ 'collections.filtering.all' | t }}</option>
+				    {% for tag in collection.all_tags %}
+					    {% if current_tags contains tag %}
+					    	<option value="{{ tag | handle }}" selected>{{ tag }}</option>
+					    {% else %}
+					    	<option value="{{ tag | handle }}">{{ tag }}</option>
+					    {% endif %}
+				    {% endfor %}
+				</select>
+			</div>
+
+			{% if collection.all_tags.size > 0 %}
+
+				<div class="option filter-by-groups">
+
+					<label for="filter-by">{{ 'collections.filtering.title' | t }}</label>
+
+					{% assign categories = '' %}
+
+					{% for tag in collection.all_tags %}
+						{% if tag contains '_' %}
+							{% capture categories %}{% unless categories == blank  %}{{ categories }}|{% endunless %}{{ tag | split: '_' | first }}{% endcapture %}
+						{% endif %}
+					{% endfor %}
+					{% assign cat_array = categories | split: '|' | uniq %}
+
+			    {% for cat_item in cat_array %}
+
+			   		<div class="option-children">
+
+							<select name="filter-by" class="filter-by" data-label="{{ cat_item }}">
+
+			    			<option value="" class="default">--</option>
+
+								{% for tag in collection.all_tags %}
+
+									{% assign cat = tag | split: '_' | first %} 
+
+									{% if cat != tag and cat_item == cat %}
+
+										{% if current_tags contains tag %}
+              				<option class="advanced-filter active-filter" data-group="{{ cat_item }}" value="{{ tag | handle }}" selected>{{ tag | remove_first: cat_item | remove_first: '_' | link_to_remove_tag: tag }}</option>
+                		{% else %}
+                 			<option class="advanced-filter" data-group="{{ cat_item }}" value="{{ tag | handle }}">{{ tag | remove_first: cat_item | remove_first: '_' | link_to_add_tag: tag }}</option>
+                		{% endif %}
+
+              		{% endif %}
+
+	            	{% endfor %}
+
+							</select>
+
+		   			</div>
+
+					{% endfor %}
+
+				</div>
+
+			{% endif %}
+
+			<div class="option">
+				<label for="sort-by">{{ 'collections.sorting.title' | t }}</label>
+				<select name="sort-by" id="sort-by">
+					<option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+					<option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+					<option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+					<option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+					<option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+					<option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+					<option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+					<option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+				</select>
+			</div>
+
+			<button id="apply-sort-filter" class="button" style="margin-right: 10px;">{{ 'sidebar.collection_filters.submit' | t }}</button>
+
+			<button id="clear-sort-filter" class="button">{{ 'sidebar.collection_filters.clear' | t }}</button>
+
+    </div>
+
+  </div>
+
+</div>

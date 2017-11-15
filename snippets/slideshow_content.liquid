@@ -1,0 +1,42 @@
+<div id="block-{{ block.id }}" {{ block.shopify_attributes }} class="slideshow-item">
+
+	<div class="site-box box--big box--center-align box--column-flow box__slideshow-item">
+		
+		<div class="site-box-content fix-me-with-margin">
+
+      {% unless block.settings.caption == blank %}
+        <p class="caption">{{ block.settings.caption | escape }}</p>
+      {% endunless %}
+
+      <h3 class="title">{{ block.settings.title | escape }}</h3>
+      
+      {% unless block.settings.subtitle == blank %}
+        <p class="subtitle">{{ block.settings.subtitle | escape }}</p>
+      {% endunless %}
+
+      {% unless block.settings.link == blank %}
+        <a class="button with-icon {{ block.settings.bg_style }}" href="{{ block.settings.link }}">{{ 'general.shop_now' | t }} <span class="icon">{% include 'asset_svg' with 'arrow_icon_smallest' %}</span></a>
+      {% endunless %}
+      
+		</div>
+
+  	<div class="site-box-background-container">
+  		<div {% if block.settings.bg_img == blank %} class="obs" {% endif %}>
+
+        {% if block.settings.bg_img == blank %}
+          {% assign no = forloop.index | modulo:2 | plus:1 %}
+          {% capture img_url %} {{ 'svg_lifestyle-X.svg' | replace: 'X', no | asset_url }} {% endcapture %}
+          {% assign img_class = 'onboarding-slide' %}
+        {% else %}
+          {% capture img_url %} {{ block.settings.bg_img | img_url: '1920x' }} {% endcapture %}
+          {% assign img_class = '' %}
+        {% endif %}
+
+        <span class="site-box-background with-image {{ img_class }}" style="background-image: url({{ img_url }});" aria-hidden="true"></span>
+
+  		</div>
+  	</div>
+
+	</div>
+
+</div>

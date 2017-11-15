@@ -1,0 +1,108 @@
+<div id="section-related-products" class="site-box-container container--fullscreen">
+
+  <div class="site-box box__heading">
+    <div class="site-box-content">
+      <h4 class="title">{{ 'product.related' | t }}</h4>
+    </div>
+  </div>
+
+  {% assign check_collections = 0 %}
+
+  {% assign found_product_ids = product.id | append: ' , ' %}
+  {% assign current_product_found = false %}
+
+  {% if product.collections.size == 0 %}
+    {% assign product_collections = collections | reverse %}
+  {% else %}
+    {% assign product_collections = product.collections | reverse %}
+  {% endif %}
+
+  {% if collection %}
+
+    {% for product in collection.products %}
+
+      {% if collection.previous_product %}
+
+        {% if collection.previous_product contains product.handle %}
+
+          {% assign check_collections = check_collections | plus: 1 %}
+          {% assign found_product_ids = found_product_ids | append: ' , ' | append: product.id %}
+
+          <div class="site-box box--small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+            <div class="site-box-content">
+              {% include 'collection_product-content' %}
+            </div>
+          </div>
+
+        {% endif %}
+
+      {% endif %}
+
+      {% if collection.next_product %}
+
+        {% if collection.next_product contains product.handle %}
+
+          {% assign check_collections = check_collections | plus: 1 %}
+          {% assign found_product_ids = found_product_ids | append: ' , ' | append: product.id %}
+
+           <div class="site-box box--small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+              <div class="site-box-content">
+                {% include 'collection_product-content' %}
+              </div>
+            </div>
+
+        {% endif %}
+
+      {% endif %}
+
+    {% endfor %}
+
+  {% endif %}
+
+  {% for collection in product_collections %}
+
+    {% if check_collections < 5 %}
+      {% unless collection.handle contains 'frontpage' %}
+
+        {% paginate collection.products by 8 %}
+
+          {% assign collection_products = collection.products %}
+
+          {% for product in collection_products %}
+
+            {% if check_collections < 5 %}
+
+              {% if found_product_ids contains product.id %}
+                {% assign current_product_found = true %}
+              {% else %}
+                {% unless current_product_found == false and forloop.index == forloop.length %}
+
+                 <div class="site-box box--small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+
+                    <div class="site-box-content">
+                      {% include 'collection_product-content' with 'box--small' %}
+                    </div>
+                  </div>
+
+                  {% assign check_collections = check_collections | plus: 1 %}
+
+                {% endunless %}
+              {% endif %}
+
+            {% endif %}
+
+          {% endfor %}
+
+        {% endpaginate %}
+
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+
+</div>
+
+{% if check_collections == 0 %}
+  <style type="text/css">
+    #section-related-products { display:  none; }
+  </style>
+{% endif %}

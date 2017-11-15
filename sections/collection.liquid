@@ -1,0 +1,154 @@
+{% assign section_settings_image_style = section.settings.image_style %}
+{% if collection.handle == null or collection.handle == 'all' %}
+  {% assign section_settings_image_style = 'no-show' %}
+{% endif %}
+
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen" data-handle="{{ collection.handle }}">
+  {% comment %}
+  Removed: {% if collection.image %} fix-me-with-height-hard {% endif %}
+  <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
+
+    <div class="site-box-content {% if collection.image %} lap--dark {% endif %}">
+
+      <h1 class="title {% if collection.image %} lap--dark {% endif %}">
+        {{ collection.title }}
+      </h1>
+
+      {% unless collection.description == blank %}
+        <div class="rte {% if collection.image %} lap--dark {% endif %}"><div>{{ collection.description }}</div></div>
+      {% endunless %}
+
+    </div>
+
+    {% if collection.image %} <div class="box__collection_image" style="background-image: url({{ collection.image | img_url: '1920x' }});" aria-hidden="true"></div> {% endif %}
+
+  </div>
+  {% endcomment %}
+
+  {% if collection.image %}
+    <div class="site-box-container container--fullscreen">
+      <div class="site-box box--bigger box--center-align box--column-flow box--no-padding box__slideshow-split back-to-normal">
+        <div class="site-box-content">
+          <div class="slideshow-item">
+            <div class="site-box box--big box--center-align box--column-flow box__slideshow-item">
+              <div class="site-box-content">
+                <h3 class="title">{{ collection.title }}</h3>
+                {% unless collection.description == blank %}
+                  <p class="subtitle">{{ collection.description }}</p>
+                {% endunless %}
+              </div>
+              {% if collection.image %}
+                <div class="site-box-background-container">
+                  <span class="site-box-background with-image {{ img_class }}" style="background-image: url({{ collection.image | img_url: '1920x' }});" aria-hidden="true"></span>
+                  <span class="site-box-black-overlay"></span>                
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
+      <div class="site-box-content {% if collection.image %} lap--dark {% endif %}">
+        <h1 class="title {% if collection.image %} lap--dark {% endif %}">
+          {{ collection.title }}
+        </h1>
+        {% unless collection.description == blank %}
+          <div class="rte {% if collection.image %} lap--dark {% endif %}"><div>{{ collection.description }}</div></div>
+        {% endunless %}
+      </div>
+      <button id="site-filter-handle" class="site-filter-handle" aria-label="{{ 'general.navigation.open_filters' | t }}">
+        <span class="filter-menu" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </span>
+      </button>
+    </div>
+  {% endif %}
+
+  {% assign collection_no = 0 %}
+
+	{% paginate collection.products by 23 %}
+
+		{% for product in collection.products %}
+
+      {% assign collection_no = collection_no | plus: 1 %}
+
+	    <div class="site-box box--small box--typo-small lap--box--small-lg box--center-align box--no-padding box--column-flow box__collection" data-order="{{ forloop.index }}">
+        <div class="site-box-content">
+          {% include 'collection_product-content' %}
+        </div>
+      </div>
+
+   	{% else %}
+
+      <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow" data-order="1">
+        <div class="site-box-content">
+          <div class="onboard" style="padding:40px;">
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+		{% if paginate.pages > 1 and paginate.next %}
+      <div class="site-box box--small lap--box--small-lg box--center-align box--no-padding box--column-flow box__paginate">
+        <div class="site-box-content">
+          <a class="block-fade" href="{{ paginate.next.url }}" title="{{ paginate.next_page }}" aria-label="{{ paginate.next_page }}">
+            <span aria-hidden="true">{% include 'asset_svg' with 'plus_icon' %}</span>
+          </a>
+        </div>
+      </div>
+		{% endif %}
+
+	{% endpaginate %}
+
+</div>
+
+<style type="text/css">
+  {% unless section.settings.collection_filtering_enabled %}
+    #site-filter-handle {
+      display: none !important;
+    }
+  {% endunless %}
+  {% if section.settings.collection_filtering_type contains 'tags' %}
+    .filter-by-groups {
+      display: none !important;
+    }
+  {% else %}
+    .filter-by-tags {
+      display: none !important;
+    }
+  {% endif %}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Collection page",
+    "class": "mount-products mount-images",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "collection_filtering_enabled",
+        "label": "Show filtering options"
+      },
+      {
+        "type": "select",
+        "id": "collection_filtering_type",
+        "label": "Filtering type",
+        "options": [
+          {
+            "value": "by-tags",
+            "label": "Filter by tags"
+          },
+          {
+            "value": "by-groups",
+            "label": "Filter by groups"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

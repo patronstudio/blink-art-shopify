@@ -1,0 +1,37 @@
+{% capture date_format %} {{ 'general.date_format' | t }} {% endcapture %}
+<a class="blog-item img-right" href="{{ article.url }}" title="{{ article.title }}" {% if article.image %} style="margin-top: -2px;" {% endif %}>
+
+	{% if article.image %} <span class="background" style="background-image: url({{ article.image.src | img_url: '960x1080', crop: 'center' }});" aria-hidden="true"></span> {% endif %}
+
+	<div class="content no-image">
+
+		<div>
+
+			<div class="header">
+
+				<h3 class="title">{{ article.title | escape }}</h3>
+
+				{% if section.settings.meta_enable %}
+
+					<p class="meta">
+
+	          {% capture author %} {{ article.author }} {% endcapture %}
+	          {% capture date %} {{ article.published_at | time_tag: date_format }} {% endcapture %}
+	          {{ 'blogs.article.post_meta_html' | t: author: author, date: date }}
+
+						{% if template == 'blog' and blog.comments_enabled? and article.comments_count > 0 %} -  <span itemProp="commentCount">{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}</span> {% endif %}
+
+					</p>
+
+				{% endif %}
+
+			</div>
+
+			<p class="excerpt">
+				{{ article.excerpt_or_content | strip_html | truncatewords: 28, '...' | escape }}
+			</p>
+
+			<span class="read-more">Read more</span>
+		</div>
+	</div>
+</a>

@@ -1,0 +1,96 @@
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen add-border">
+
+  {% for block in section.blocks %}
+
+    {% include 'image_text-content' %}
+
+  {% endfor %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Images with text overlay",
+    "class": "index-section mount-images",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "type": "select",
+        "id": "txt_align",
+        "label": "Text alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image with text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image with text"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Caption",
+            "default": "Share your latest products, collections or promotions!"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "checkbox",
+            "id": "button",
+            "label": "Show button"
+          },
+          {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Background image"
+          },
+          {
+            "type": "select",
+            "id": "bg_style",
+            "label": "Text color",
+            "options": [
+              {
+                "value": "light",
+                "label": "Dark"
+              },
+              {
+                "value": "dark",
+                "label": "Light"
+              }
+            ]
+          }
+        ]
+      }
+    ], 
+    "presets": [{
+      "name": "Images with text overlay",
+      "category": "Image",
+      "blocks": [{
+        "type": "image"
+      }]
+    }]
+  }
+{% endschema %}

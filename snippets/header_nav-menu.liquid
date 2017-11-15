@@ -1,0 +1,113 @@
+{% assign current_menu = header_nav-menu %}
+{% capture menu_size %} {{ linklists[current_menu].links | size }} {% endcapture %}
+
+<ul class="{{ current_menu }} link-list size-{{ menu_size | lstrip | rstrip }}">
+
+  {% if section.blocks.size > 0 %}
+
+		{% assign submenu_active = false %}
+		{% for block in section.blocks %}
+			{% if collection.url == collections[block.settings.collection_select].url %}
+				{% assign submenu_active = true %}
+			{% endif %}
+		{% endfor %}
+
+    <li class="has-submenu collections-menu">
+			<a {% if link.active or submenu_active %} class="active" {% endif %} href="/collections/all">
+				<span>{{ 'collections.general.all_collections' | t }}</span>
+				{% comment %}<span class="icon-go go-next go-down">{% include 'asset_svg' with 'arrow_icon_long' %}</span>{% endcomment %}
+			</a>
+      <ul class="submenu">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <a {% if collection.url == collections[block.settings.collection_select].url %} class="active" {% endif %} href="{{ collections[block.settings.collection_select].url }}"><span>{{ collections[block.settings.collection_select].title }}</span></a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+
+  {% endif %}
+
+	{% for link in linklists[current_menu].links %}
+
+		{% assign child_list_handle = link.title | handleize %}
+
+		{% if linklists[child_list_handle].links != blank %}
+
+			{% assign submenu_active = false %}
+			{% for childlink in linklists[child_list_handle].links %}
+				{% if childlink.active %}
+					{% assign submenu_active = true %}
+				{% endif %}
+			{% endfor %}
+
+			<li class="has-submenu" aria-haspopup="true">
+				{% if link.title == 'Artists' %}
+					<a href="#">{{ link.title }}</a>
+				{% else %}
+					<a {% if link.active or submenu_active %} class="active" {% endif %} href="{{ link.url }}">
+						<span>{{ link.title }}</span>
+						<span class="icon-go go-next go-down hide show-in-sidebar" style="left: auto;">{% include 'asset_svg' with 'arrow_icon_long' %}</span>
+						{% comment %}<span class="icon-go go-next go-down hide show-in-classic">{% include 'asset_svg' with 'arrow_icon_long' %}</span>{% endcomment %}
+					</a>
+				{% endif %}
+				<ul class="submenu {% if linklists[child_list_handle].links.size > 4 %}submenu--smaller{% endif %}">
+				{% for childlink in linklists[child_list_handle].links %}
+					{% assign grand_child_list_handle = childlink.title | handle %}
+					{% if linklists[grand_child_list_handle] and linklists[grand_child_list_handle].links.size > 0 %}
+						{% assign final_submenu_active = false %}
+						{% for grand_child_link in linklists[grand_child_list_handle].links %}
+							{% if grand_child_link.active %}
+								{% assign final_submenu_active = true %}
+							{% endif %}
+						{% endfor %}
+						<li class="has-submenu" aria-haspopup="true">
+							<a {% if link.active %} class="active" {% endif %} href="{{ childlink.url }}">
+								<span>{{ childlink.title | escape }}</span>
+								<span class="icon-go go-next go-down hide show-in-sidebar" style="left: auto;">{% include 'asset_svg' with 'arrow_icon_long' %}</span>
+								{% comment %}<span class="icon-go go-next go-down hide show-in-classic">{% include 'asset_svg' with 'arrow_icon_long' %}</span>{% endcomment %}
+							</a>
+							<ul class="submenu submenu--final">
+								{% for grand_child_link in linklists[grand_child_list_handle].links %}
+									<li>
+										<a {% if link.active or final_submenu_active %} class="active" {% endif %} href="{{ grand_child_link.url }}">
+											<span>{{ grand_child_link.title | escape }}</span>
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</li>
+					{% else %}
+					<li>
+						<a {% if link.active %} class="active" {% endif %} href="{{ childlink.url }}">
+							<span>{{ childlink.title | escape }}</span>
+						</a>
+					</li>
+					{% endif %}
+				{% endfor %}
+				</ul>
+			</li>
+
+		{% else %}
+
+			<li>
+				<a {% if link.active %} class="active" {% endif %} href="{{ link.url }}"><span>{{ link.title }}</span></a>
+			</li>
+
+		{% endif %}
+
+	{% endfor %}
+
+	{% if shop.customer_accounts_enabled %}
+		<li class="login">
+			<a {% if link.active %} class="active"{% endif %} href="{% if customer %}/account{% else %}/account/login{% endif %}">
+				{% if customer %}
+					<span>{{ 'general.navigation.account' | t }}</span>
+				{% else %}
+					<span>{{ 'general.navigation.login' | t }}</span>
+				{% endif %}
+			</a>
+		</li>
+	{% endif %}
+
+</ul>

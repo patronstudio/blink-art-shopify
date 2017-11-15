@@ -1,0 +1,260 @@
+<div id="section-{{ section.id }}" class="site-box-container container--fullscreen box--can-stick" itemscope itemtype="//schema.org/Product" data-collection="{{ collection.handle }}" data-gallery-size="{{ product.images.size }}">
+
+	<div class="site-box box--big lap--box--bigger box--typo-big box--no-padding box__product-gallery {{ section.settings.gallery_style }}" data-lap="box--bigger" data-order="0">
+
+		<div class="site-box-content">
+
+			{% if product.images.size == 0 %}
+
+				<div class="gallery-item">
+					<img src="{{ 'svg_product-1.svg' | asset_url }}" alt="" />
+				</div>
+
+			{% else %}
+
+				{% for image in product.images %}
+
+				{% assign crop_img_url_small = '480x' %}
+			  {% assign crop_img_url_medium = '960x' %}
+			  {% assign crop_img_url_large = '1440x' %}
+			  {% assign crop_img_url_huge= '1920x' %}
+
+					<div class="box--product-image gallery-item" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
+						<img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt=" {{ image.alt }}">
+					</div>
+
+				{% endfor %}
+
+			{% endif %}
+
+		</div>
+
+    {% if section.settings.gallery_zoom %}
+
+      <div id="product-zoom-in" class="product-zoom out-with-you {% unless section.settings.site_sharing %} no-sharing {% endunless %}" aria-label="{{ 'product.zoom_product_image.zoom_in' | t }}" title="{{ 'product.zoom_product_image.zoom_in' | t }}">
+        <span class="zoom-in" aria-hidden="true">{% include 'asset_svg' with 'zoom_in_icon' %}</span>
+      </div>
+
+    {% endif %}
+
+    {% if section.settings.site_sharing %}
+      {% include 'social_sharing' %}
+    {% endif %}
+
+	</div>
+
+  <div class="site-box box--big lap--box--bigger box--typo-big box--center-align box--column-flow box__product-content"  data-lap="box--bigger" data-order="1">
+
+    {% include 'product_breadcrumb' %}
+
+    <div class="site-box-content fix-me-with-margin">
+      {% assign title = product.title | split: '|' %}
+      <h1 itemprop="name">{{ title[0] }}</h1>
+
+      {% comment %} {% if section.settings.product_vendor_enabled %}
+        {% capture vendor %} {{ product.vendor | link_to_vendor }} {% endcapture %}
+        <p id="product-vendor" itemprop="brand">{{ 'product.vendor_html' | t: vendor: vendor }}</p>
+      {% endif %} {% endcomment %}
+
+      <p id="product-vendor" itemprop="brand">by {{ title[1] }}</p>
+
+      <div class="rte" itemprop="description">
+        {{ product.description }}
+      </div>
+
+      <span id="variantQuantity" class="variant-quantity"></span>
+
+      <span id="price">
+        {% include 'product_badges' %}
+        <span id="productPrice">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span id="comparePrice" class="info">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+      </span>
+
+      <div class="offers" itemprop="offers" itemscope itemtype="//schema.org/Offer">
+
+       {% assign variant = product.selected_or_first_available_variant %}
+
+        <meta itemprop="price" content="{{ product.price | money_without_currency }}">
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+
+        <link itemprop="availability" href="//schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart" class="style--{{ section.settings.variants_style }}" data-type="{{ settings.cart_action }}">
+
+          <div class="cart-functions">
+            <span>Quantity:</label>
+            {% if section.settings.quantity_selector %}
+              <input type="number" id="quantity" name="quantity" value="1" min="1" class="quantity-selector" aria-label="{{ 'product.quantity' | t }}">
+            {% endif %}
+          </div>
+
+          {% for option in product.options_with_values %}
+            <div class="product-variant selector-wrapper hidden">
+              <label for="product-{{ option.name | downcase | strip }}">{{ option.name }}</label>
+              <select class="product-variants" id="product-{{ option.name | downcase | strip }}">
+                {% for value in option.values %}
+                  <option {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+
+           <select id="productSelect" name="id" class="styled" style="display: none;">
+            {% for variant in product.variants %}
+              {% if variant.available %}
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+                  {{ variant.title }}
+                </option>
+              {% else %}
+                <option disabled="disabled">{{ variant.title }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          <div class="cart-functions">
+            <button type="submit" name="add" id="addToCart" class="button color"><span id="addToCartText">{{ 'product.add_to_cart' | t }}</span></button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% comment %} {% include 'product_artist' %} {% endcomment %}
+{% for collection in product.collections %}
+  <div id="product-artist" class="site-box-container container--fullscreen">
+    {% if collection.image %}
+      <div class="product-artist__image" style="background-image: url({{ collection.image | img_url: '150x' }});" aria-hidden="true"></div>
+    {% endif %}
+    <div class="product-artist__details">
+        <h2 class="product-artist__title">{{ collection.title | link_to: collection.handle }}</h2>
+        {% unless collection.description == blank %}
+          <div class="product-artist__description">{{ collection.description }}</div>
+        {% endunless %}
+    </div>
+  </div>
+{% endfor %}
+
+{% if section.settings.related_products %}
+  {% include 'product_related' %}
+{% endif %}
+
+{% if section.settings.gallery_resize == 'fit' %}
+  <style type="text/css">
+    .box__product-gallery .box--product-image {
+      background-size: contain;
+      width: 80%;
+      height: 80%;
+      margin: 10%;
+    }
+    #fix-me-header {
+      content: "fix-gallery-item";
+    }
+    @media  screen and (max-width: 768px), screen and (max-width: 1024px) and (orientation: portrait){
+      .box__product-gallery .box--product-image {
+        width: 90% !important;
+        height: 90% !important;
+        margin: 5%;
+      }
+    }
+  </style>
+{% endif %}
+
+{% if settings.cart_action == 'overlay' %}
+  <script type="text/javascript">
+    if ( ! $('html').hasClass('ie9') ) {
+      $('#add-to-cart').attr('action', $('#add-to-cart').attr('action') + '.js');
+    }
+  </script>
+{% endif %}
+
+{% schema %}
+	{
+    "name": "Product page",
+    "class": "mount-product mount-images",
+    "settings": [
+      {
+        "type": "select",
+        "id": "gallery_style",
+        "label": "Gallery style",
+        "options": [
+          {
+            "value": "scroll",
+            "label": "Scroll"
+          },
+          {
+            "value": "slider",
+            "label": "Slider"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "gallery_resize",
+        "label": "Gallery image aspect",
+        "options": [
+          {
+            "value": "fill",
+            "label": "Cropped"
+          },
+          {
+            "value": "fit",
+            "label": "Natural"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "gallery_zoom",
+        "label": "Enable image zoom",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_vendor_enabled",
+        "label": "Show vendor",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "variants_style",
+        "label": "Variants style",
+        "options": [
+          {
+            "value": "minimal",
+            "label": "Minimal"
+          },
+          {
+            "value": "classic",
+            "label": "Classic"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "quantity_selector",
+        "label": "Show quantity selector",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "related_products",
+        "label": "Show related products",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "site_sharing",
+        "label": "Enable product sharing",
+        "default": true
+      }
+    ]
+   }
+{% endschema %}

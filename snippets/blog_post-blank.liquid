@@ -1,0 +1,22 @@
+{% assign article_img = blog_post-blank %}
+<a class="blog-item img-right" href="{{ article.url }}" title="{{ article.title }}" style="margin-top: -2px;">
+	<span class="background" style="background-image: url({{ article_img }}); background-size: contain;" aria-hidden="true"></span>
+
+	<div class="content">
+
+		<div>
+
+			<div class="header">
+
+				<h3 class="title">Your article's title</h3>
+
+				{% if section.settings.meta_enable %}
+					<p class="meta">by Author on 12 May 2017<br />0 Comments</p>
+				{% endif %}
+
+			</div>
+
+		</div>
+
+	</div>
+</a>

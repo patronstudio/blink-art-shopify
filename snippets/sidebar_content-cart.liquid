@@ -1,0 +1,17 @@
+<div id="site-cart" class="site-nav-container" tabindex="-1">
+
+  <div class="site-nav-container-last">
+
+    <p class="title">{{ 'sidebar.cart.title' | t }}</p>
+    
+  	<p class="subtitle" data-added-singular="{{ 'sidebar.cart.added_items_count.one' | t }}" data-added-plural="{{ 'sidebar.cart.added_items_count.other' | t }}">{{ 'sidebar.cart.items_count' | t: count: cart.item_count }}</p> 
+
+    <div class="top">
+
+      {% include 'cart_form' with 'sidebar' %}
+
+    </div>
+
+  </div>
+
+</div>

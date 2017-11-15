@@ -1,0 +1,13 @@
+<div class="footer-content site-box-content" {{ block.shopify_attributes }}>
+
+  {% if block.settings.title %}
+    <h4>{{ block.settings.title | escape }}</h4>
+  {% endif %}
+	
+  {% include 'header_footer-social' with 'large' %}
+
+  {% if block.settings.caption %}
+    <p class="caption">{{ block.settings.caption | escape }}</p>
+  {% endif %}
+
+</div>
