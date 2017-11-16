@@ -467,13 +467,13 @@ http://flickity.metafizzy.co
 .flickity-viewport {
   overflow: hidden;
   position: relative;
-  height: 100%
+  height: 60vh;
 }
 
 .flickity-slider {
   position: absolute;
   width: 100%;
-  height: 100%
+  height: 60vh;
 }
 
 .flickity-enabled.is-draggable {
@@ -573,8 +573,6 @@ http://flickity.metafizzy.co
 }
 
 .flickity-page-dots .dot.is-selected { opacity: 1 }
-
-.flickity-viewport { height: 100% !important; }
 
 .mfp-bg,
 .mfp-wrap {
@@ -1646,6 +1644,10 @@ html:not(.ie9) {
   }
   &.box--column-flow {
     flex-direction: column;
+  }
+
+  &.box--align-center {
+    align-items: center;
   }
 
   &.box--image-show-half {
@@ -3032,11 +3034,16 @@ html:not(.ie9) {
       }
     }
 
+    .site-box-content { height: 100%; }
+
     .slideshow-item {
       @extend .clearfix;
+      width: 100%;
+      height: 100%;
 
       .site-box.box--big {
         width: 100%;
+        height: 100%;
         min-height: 60vh;
         align-items: center;
         //@include i-hate-ie();
@@ -3050,12 +3057,11 @@ html:not(.ie9) {
         width: 50%;
         display: flex;
         flex-direction: column;
-         //align-items: flex-start;
+        justify-content: center;
+        //align-items: flex-start;
       }
 
-      .site-box {
-        border: none !important;
-      }
+      .site-box { border: none !important; }
 
       .caption {
         opacity: .92;
@@ -3084,7 +3090,7 @@ html:not(.ie9) {
 
       .button {
         margin-top: 30px;
-        align-self: flex-start;
+        align-self: center;
         text-align: center;
         text-transform: uppercase;
         transition: opacity 150ms linear, color 150ms linear, padding 200ms linear/*, transform 200ms linear*/
@@ -3196,9 +3202,9 @@ html:not(.ie9) {
         }
       }
 
-      .flickity-enabled .slideshow-item {
-        opacity: 1 !important;
-      }
+      // .flickity-enabled .slideshow-item {
+      //   opacity: 1 !important;
+      // }
 
       .slideshow-item {
         width: 100%;
@@ -3243,14 +3249,11 @@ html:not(.ie9) {
         }
       }
 
-      .box__slideshow-item {
-        height: 100% !important;
-        min-height: 0 !important;
-      }
+      .box__slideshow-item { height: 100% !important; }
     }
 
     @include at-query($max, $lap) {
-      height: calc(100vh - 91px); 
+      //height: calc(100vh - 91px); 
       // header height-1 here
       justify-content: flex-start;
 
@@ -3318,11 +3321,11 @@ html:not(.ie9) {
           align-self: center;
           transform: none !important;
 
-          &:not(:hover),
-          &:not(.hover) {
-            background: $whiteColor !important;
-            color: #000 !important;
-          }
+          // &:not(:hover),
+          // &:not(.hover) {
+          //   background: $whiteColor !important;
+          //   color: #000 !important;
+          // }
         }
       }
 
@@ -4992,14 +4995,14 @@ html:not(.ie9) .template-collection .box__heading {
 .site-filter-handle {
   display: block;
   position: absolute;
-  left: 30px;
+  right: 30px;
   width: 23px;
   height: 23px;
   transition: opacity 150ms linear;
   z-index: 10;
 
   @include at-query($min, $portable) {
-    left: 40px;
+    right: 40px;
   }
 
   #site-nav--mobile.active.show-filters~& {
@@ -5035,7 +5038,6 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 .filter-menu {
-
   position: absolute;
   width: 30px;
   height: 20px;
@@ -5044,7 +5046,6 @@ html:not(.ie9) .template-collection .box__heading {
   transition: all 150ms linear;
 
   .bar {
-
     width: 2px;
     height: 17px;
     background: $logoColor;
@@ -5441,9 +5442,13 @@ html:not(.ie9) .template-collection .box__heading {
 .gallery-item {
   height: 0 !important;
   padding-bottom: 75%;
+
   @include at-query($max, $lap) {
     height: 100% !important;
   }
+
+  // TODO: Change this.
+  &:not(:first-child) { display: none!important; }
 
   @media screen and (orientation: landscape) {
     .animate & {
@@ -5490,15 +5495,13 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 .flickity-page-dots {
+  bottom: -40px;
 
   @include at-query($min, $lap+1) {
     display: none;
   }
 
-  bottom: -40px;
-
   .dot {
-
     background: transparent;
     opacity: .66;
     border: 2px solid $textMain;
@@ -5517,7 +5520,6 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 .icon-go {
-
   position: absolute;
   overflow: hidden;
   cursor: pointer;
@@ -5898,7 +5900,6 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 #site-filters {
-
   .option {
     margin-bottom: 50px;
   }
@@ -7837,3 +7838,14 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 .mount-product { padding-bottom: 60px; }
+
+.shipping-text {
+  position: absolute;
+  top: 50%; left: 30px;
+  transform: translateY(-50%);
+  margin: 0;
+
+  @include at-query($min, $portable) {
+    left: 40px;
+  }
+}

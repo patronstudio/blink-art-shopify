@@ -95,7 +95,15 @@
               <label for="product-{{ option.name | downcase | strip }}">{{ option.name }}</label>
               <select class="product-variants" id="product-{{ option.name | downcase | strip }}">
                 {% for value in option.values %}
-                  <option {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {% assign title = value | split: '|' %}
+                  {% assign titleTrim = title[1] | strip %}
+                  {% assign titleFirst = title[1] | split: ' ' %}
+                  {% if value == 'No Frame' %} 
+                    {% assign titleFirst = 'None' %}
+                  {% else %}
+                    {% assign titleFirst = titleFirst[0] %}
+                  {% endif %}
+                  <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ titleFirst }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -129,17 +137,20 @@
 
 {% comment %} {% include 'product_artist' %} {% endcomment %}
 {% for collection in product.collections %}
-  <div id="product-artist" class="site-box-container container--fullscreen">
-    {% if collection.image %}
-      <div class="product-artist__image" style="background-image: url({{ collection.image | img_url: '150x' }});" aria-hidden="true"></div>
-    {% endif %}
-    <div class="product-artist__details">
-        <h2 class="product-artist__title">{{ collection.title | link_to: collection.handle }}</h2>
-        {% unless collection.description == blank %}
-          <div class="product-artist__description">{{ collection.description }}</div>
-        {% endunless %}
+  {% assign artist = title[1] | lstrip %}
+  {% if collection.title == artist %}
+    <div id="product-artist" class="site-box-container container--fullscreen">
+      {% if collection.image %}
+        <div class="product-artist__image" style="background-image: url({{ collection.image | img_url: '150x' }});" aria-hidden="true"></div>
+      {% endif %}
+      <div class="product-artist__details">
+          <h2 class="product-artist__title">{{ collection.title | link_to: collection.handle }}</h2>
+          {% unless collection.description == blank %}
+            <div class="product-artist__description">{{ collection.description }}</div>
+          {% endunless %}
+      </div>
     </div>
-  </div>
+  {% endif %}
 {% endfor %}
 
 {% if section.settings.related_products %}

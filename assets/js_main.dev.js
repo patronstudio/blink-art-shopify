@@ -472,6 +472,7 @@ if ($('body').hasClass('template-product')) {
               ' tabindex="0" data-text="' +
               $(this).val() +
               '"><span' +
+              ' data-value="' + $(this).val() + '" ' +
               (color
                 ? ' style="background-color: ' +
                   $(this)
@@ -481,7 +482,7 @@ if ($('body').hasClass('template-product')) {
                   '"'
                 : '') +
               '>' +
-              $(this).val() +
+              $(this).text() +
               '</span></li>';
           });
 
@@ -503,7 +504,7 @@ if ($('body').hasClass('template-product')) {
               .val(
                 $(this)
                   .find('span')
-                  .text()
+                  .data('value')
               )
               .change();
           });
@@ -519,7 +520,7 @@ if ($('body').hasClass('template-product')) {
                 .val(
                   $(this)
                     .find('span')
-                    .text()
+                    .data('value')
                 )
                 .change();
             }
@@ -2849,10 +2850,10 @@ window.blockStickyHeader = false;
       _mountFlickity: function() {
         $('.responsive-flickity').flickity({
           cellSelector: '.slideshow-item',
-          wrapAround: false,
+          wrapAround: true,
           prevNextButtons: false,
           pageDots: false,
-          watchCSS: true,
+          // watchCSS: true,
           resize: true
         });
 
@@ -2918,13 +2919,12 @@ window.blockStickyHeader = false;
         (j = i - 1), (t = $slides.length);
 
         // mobile slider
-
         if (flick) {
           this._mountFlickity();
         }
 
         if ($('.responsive-flickity').hasClass('flickity-enabled')) {
-          $slider.height($(window).height() - $('#site-header').outerHeight());
+          //$slider.height($(window).height() - $('#site-header').outerHeight());
           $slider.addClass('remove-min-height');
         } else {
           $slider.css('height', 'auto');

@@ -79,7 +79,7 @@ Shopify.updateOptionsInSelector = function(selectorIndex) {
 
  	selector.parent().find('ul li').each(function(){
  		$(this).removeClass('disabled');
- 		if ( $.inArray($(this).text(), availableOptions) === -1 ) {
+ 		if ( $.inArray($(this).data('text'), availableOptions) === -1 ) {
  			$(this).addClass('disabled');
  		}
   });
