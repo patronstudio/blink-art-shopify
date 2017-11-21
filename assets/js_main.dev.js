@@ -2864,43 +2864,43 @@ window.blockStickyHeader = false;
           $currentSlide = null,
           $currentSlideBlack = null;
 
-        if ($slider.find('.slider-meta').length <= 0) {
-          $slider.find('.slider-meta').remove();
+        // if ($slider.find('.slider-meta').length <= 0) {
+        //   $slider.find('.slider-meta').remove();
 
-          $slider.append(
-            '<div class="slider-meta hide lap--show"><div class="slider-index"><span class="current">1</span> / <span class="total">' +
-              t +
-              '</span></div><div class="slider-nav"><span class="go-prev">' +
-              $.themeAssets.arrowRight +
-              '</span><span class="go-next">' +
-              $.themeAssets.arrowRight +
-              '</span></div>'
-          );
+        //   $slider.append(
+        //     '<div class="slider-meta lap--show"><div class="slider-index"><span class="current">1</span> / <span class="total">' +
+        //       t +
+        //       '</span></div><div class="slider-nav"><span class="go-prev">' +
+        //       $.themeAssets.arrowRight +
+        //       '</span><span class="go-next">' +
+        //       $.themeAssets.arrowRight +
+        //       '</span></div>'
+        //   );
 
-          $slider.find('.go-prev').on(
-            'click',
-            function() {
-              flkty.previous();
-            }.bind(this)
-          );
+        //   $slider.find('.go-prev').on(
+        //     'click',
+        //     function() {
+        //       flkty.previous();
+        //     }.bind(this)
+        //   );
 
-          $slider.find('.go-next').on(
-            'click',
-            function() {
-              flkty.next();
-            }.bind(this)
-          );
+        //   $slider.find('.go-next').on(
+        //     'click',
+        //     function() {
+        //       flkty.next();
+        //     }.bind(this)
+        //   );
 
-          $('.responsive-flickity').on('select.flickity', function() {
-            $slider
-              .find('.slider-index .current')
-              .html(flkty.selectedIndex + 1);
-          });
+        //   $('.responsive-flickity').on('select.flickity', function() {
+        //     $slider
+        //       .find('.slider-index .current')
+        //       .html(flkty.selectedIndex + 1);
+        //   });
 
-          setTimeout(function() {
-            $slider.find('.slider-meta').addClass('active');
-          }, 1000);
-        }
+        //   setTimeout(function() {
+        //     $slider.find('.slider-meta').addClass('active');
+        //   }, 1000);
+        // }
       },
 
       mount: function(flick) {

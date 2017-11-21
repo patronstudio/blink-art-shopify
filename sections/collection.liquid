@@ -49,14 +49,14 @@
       </div>
     </div>
   {% else %}
-    <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
+    <div class="site-box box--big lap--box--small-fl box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
+      <p class="shipping-text">Free Shipping</p>
       <div class="site-box-content {% if collection.image %} lap--dark {% endif %}">
-        <p class="shipping-text">Free Shipping</p>
         <h1 class="title {% if collection.image %} lap--dark {% endif %}">
           {{ collection.title }}
         </h1>
         {% unless collection.description == blank %}
-          <div class="rte {% if collection.image %} lap--dark {% endif %}"><div>{{ collection.description }}</div></div>
+          <div class="rte rte--collection {% if collection.image %} lap--dark {% endif %}"><div>{{ collection.description }}</div></div>
         {% endunless %}
       </div>
       <button id="site-filter-handle" class="site-filter-handle" aria-label="{{ 'general.navigation.open_filters' | t }}">

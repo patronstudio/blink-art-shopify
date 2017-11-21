@@ -48,15 +48,15 @@
     {% include 'product_breadcrumb' %}
 
     <div class="site-box-content fix-me-with-margin">
-      {% assign title = product.title | split: '|' %}
-      <h1 itemprop="name">{{ title[0] }}</h1>
+      {% assign productTitle = product.title | split: '|' %}
+      <h1 itemprop="name">{{ productTitle[0] }}</h1>
 
       {% comment %} {% if section.settings.product_vendor_enabled %}
         {% capture vendor %} {{ product.vendor | link_to_vendor }} {% endcapture %}
         <p id="product-vendor" itemprop="brand">{{ 'product.vendor_html' | t: vendor: vendor }}</p>
       {% endif %} {% endcomment %}
 
-      <p id="product-vendor" itemprop="brand">by {{ title[1] }}</p>
+      <p id="product-vendor" itemprop="brand">by {{ productTitle[1] }}</p>
 
       <div class="rte" itemprop="description">
         {{ product.description }}
@@ -135,23 +135,24 @@
 
 </div>
 
-{% comment %} {% include 'product_artist' %} {% endcomment %}
-{% for collection in product.collections %}
-  {% assign artist = title[1] | lstrip %}
-  {% if collection.title == artist %}
-    <div id="product-artist" class="site-box-container container--fullscreen">
-      {% if collection.image %}
-        <div class="product-artist__image" style="background-image: url({{ collection.image | img_url: '150x' }});" aria-hidden="true"></div>
-      {% endif %}
-      <div class="product-artist__details">
-          <h2 class="product-artist__title">{{ collection.title | link_to: collection.handle }}</h2>
-          {% unless collection.description == blank %}
-            <div class="product-artist__description">{{ collection.description }}</div>
-          {% endunless %}
-      </div>
+{% comment %}
+  We need to get the last part of the product title which should be the artist name.
+  We then use this title to match with a collection that should be the same name.
+{% endcomment %}
+{% assign collectionName = productTitle[1] | handleize %}
+{% if collections[collectionName].title %}
+  <div id="product-artist" class="site-box-container container--fullscreen">
+    {% if collections[collectionName].image %}
+      <div class="product-artist__image" style="background-image: url({{ collections[collectionName].image | img_url: '150x' }});" aria-hidden="true"></div>
+    {% endif %}
+    <div class="product-artist__details">
+        <h2 class="product-artist__title">{{ collections[collectionName].title | link_to: collections[collectionName].handle }}</h2>
+        {% unless collections[collectionName].description == blank %}
+          <div class="product-artist__description">{{ collections[collectionName].description }}</div>
+        {% endunless %}
     </div>
-  {% endif %}
-{% endfor %}
+  </div>
+{% endif %}
 
 {% if section.settings.related_products %}
   {% include 'product_related' %}
@@ -161,19 +162,9 @@
   <style type="text/css">
     .box__product-gallery .box--product-image {
       background-size: contain;
-      width: 80%;
-      height: 80%;
-      margin: 10%;
     }
     #fix-me-header {
       content: "fix-gallery-item";
-    }
-    @media  screen and (max-width: 768px), screen and (max-width: 1024px) and (orientation: portrait){
-      .box__product-gallery .box--product-image {
-        width: 90% !important;
-        height: 90% !important;
-        margin: 5%;
-      }
     }
   </style>
 {% endif %}
