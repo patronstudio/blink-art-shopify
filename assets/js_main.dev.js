@@ -883,7 +883,6 @@ window.blockStickyHeader = false;
           $(this)
             .children('a')
             .on('click touchstart', function(e) {
-              console.log('clicked');
 
               e.preventDefault();
               var $parent = $(this).parent();
@@ -1286,7 +1285,6 @@ window.blockStickyHeader = false;
                       ) {
                         $(elm).addClass('current');
                         this.$productGalleryIndex.html($(elm).index() + 1);
-                        console.log('add current');
                       } else if (
                         $(window).scrollTop() + $(window).height() <
                           $(elm).offset().top + $(window).height() / 2 &&
@@ -1294,7 +1292,6 @@ window.blockStickyHeader = false;
                       ) {
                         $(elm).removeClass('current');
                         this.$productGalleryIndex.html($(elm).index());
-                        console.log('reset');
                       }
                     }.bind(this)
                   );
@@ -1361,14 +1358,14 @@ window.blockStickyHeader = false;
 
         // Product zoom
 
-        if ($('#product-zoom-in').length > 0) {
+        if ($('#product-zoom-in').length > 0 || $('.product-zoom-in').length > 0) {
           $('body').append(
             '<div id="product-zoomed-image"><img /><div id="product-zoom-out" class="product-zoom expand"><span class="zoom-out">' +
               $.themeAssets.iconClose +
               '</span></div></div>'
           );
 
-          $('#product-zoom-in').on(
+          $('#product-zoom-in, .product-zoom-in').on(
             'click',
             function(e) {
               // animation out

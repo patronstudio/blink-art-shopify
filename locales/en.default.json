@@ -52,8 +52,8 @@
     "article": {
       "post_meta_html": "by {{ author }} on {{ date }}",
       "author": "by {{ author }}",
-      "older_post": "Older Post",
-      "newer_post": "Newer Post",
+      "older_post": "Previous",
+      "newer_post": "Next",
       "comment_meta_html": "{{ author }} on {{ date }}"
     },
     "comments": {

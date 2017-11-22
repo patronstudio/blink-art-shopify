@@ -1,6 +1,11 @@
 <div id="section-{{ section.id }}" class="site-box-container container--fullscreen box--can-stick" itemscope itemtype="//schema.org/Product" data-collection="{{ collection.handle }}" data-gallery-size="{{ product.images.size }}">
+  
+  {% assign count_variants = 0 %}
+  {% for variant in product.variants %}
+    {% assign count_variants = count_variants | plus: 1 %}
+  {% endfor %}
 
-	<div class="site-box box--big lap--box--bigger box--typo-big box--no-padding box__product-gallery {{ section.settings.gallery_style }}" data-lap="box--bigger" data-order="0">
+	<div class="site-box box--big lap--box--bigger box--typo-big box--no-padding box__product-gallery {{ section.settings.gallery_style }}" data-lap="box--bigger" data-order="0" data-offset="{{ count_variants }}">
 
 		<div class="site-box-content">
 
@@ -14,38 +19,38 @@
 
 				{% for image in product.images %}
 
-				{% assign crop_img_url_small = '480x' %}
-			  {% assign crop_img_url_medium = '960x' %}
-			  {% assign crop_img_url_large = '1440x' %}
-			  {% assign crop_img_url_huge= '1920x' %}
+          {% assign crop_img_url_small = '480x' %}
+          {% assign crop_img_url_medium = '960x' %}
+          {% assign crop_img_url_large = '1440x' %}
+          {% assign crop_img_url_huge= '1920x' %}
 
-					<div class="box--product-image gallery-item" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
-						<img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt=" {{ image.alt }}">
-					</div>
+          <div class="product-zoom-in box--product-image gallery-item" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
+            <img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt=" {{ image.alt }}">
+          </div>
 
-				{% endfor %}
+        {% endfor %}
 
 			{% endif %}
 
 		</div>
 
-    {% if section.settings.gallery_zoom %}
+    {% comment %} {% if section.settings.gallery_zoom %}
 
       <div id="product-zoom-in" class="product-zoom out-with-you {% unless section.settings.site_sharing %} no-sharing {% endunless %}" aria-label="{{ 'product.zoom_product_image.zoom_in' | t }}" title="{{ 'product.zoom_product_image.zoom_in' | t }}">
         <span class="zoom-in" aria-hidden="true">{% include 'asset_svg' with 'zoom_in_icon' %}</span>
       </div>
 
-    {% endif %}
+    {% endif %} {% endcomment %}
 
-    {% if section.settings.site_sharing %}
+    {% comment %} {% if section.settings.site_sharing %}
       {% include 'social_sharing' %}
-    {% endif %}
+    {% endif %} {% endcomment %}
 
 	</div>
 
   <div class="site-box box--big lap--box--bigger box--typo-big box--center-align box--column-flow box__product-content"  data-lap="box--bigger" data-order="1">
 
-    {% include 'product_breadcrumb' %}
+    {% comment %} {% include 'product_breadcrumb' %} {% endcomment %}
 
     <div class="site-box-content fix-me-with-margin">
       {% assign productTitle = product.title | split: '|' %}

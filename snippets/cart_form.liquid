@@ -14,8 +14,9 @@
         <div class="content">
 
           <a href="{{ item.url }}" class="title">
-            {{ item.product.title }}
-            <span>by {{ item.product.vendor }}</span>
+            {% assign productTitle = item.product.title | split: '|' %}
+            {{ productTitle[0] }}
+            <span>by {{ productTitle[1] }}</span>
           </a>
 
           {% unless item.variant.title contains 'Default' %}

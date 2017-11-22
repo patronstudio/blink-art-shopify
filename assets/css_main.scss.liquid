@@ -1121,6 +1121,10 @@ h1, h2, h3, h4, h5, h6 {
 .rte {
   font-size: 18px;
 
+  .template-article & {
+    a { color: $bodyAcc; }
+  }
+
   &.rte--collection {
     width: 100%;
     max-width: $lap;
@@ -1621,7 +1625,7 @@ html:not(.ie9) {
   position: relative;
   float: left;
   overflow: hidden; 
-  padding: 40px;
+  padding: 20px 40px;
   background-color: $bodyBg;
 
   &.min-vh-height { min-height: 60vh; }
@@ -1632,6 +1636,7 @@ html:not(.ie9) {
       position: -webkit-sticky;
       position: sticky;
       top: 0;
+      padding-bottom: 10px;
       border-bottom: 0;
     }
   } 
@@ -1978,7 +1983,7 @@ html:not(.ie9) {
       }
 
       .content {
-        padding: 40px;
+        padding: 20px;
         transition: all 250ms $easeInOutSine, background 150ms linear;
 
         &:not(.dark) {
@@ -1988,13 +1993,9 @@ html:not(.ie9) {
           }
         }
 
-        .ie9 & {
-          z-index: 999;
-        }
+        .ie9 & { z-index: 999; }
 
-        > div {
-          width: 100%;
-        }
+        > div { width: 100%; }
 
         @include at-query($max, $lap) {
           padding: 30px;
@@ -2003,14 +2004,12 @@ html:not(.ie9) {
         &.dark {
           color: $whiteColor !important;
 
-          .header:after {
-            background: $whiteColor;
-          }
+          .header:after { background: $whiteColor; }
         }
       }
 
       .title {
-        font-size: 24px;
+        font-size: 18px;
         margin-bottom: 0;
         line-height: 1.2;
         // @include at-query($max, $lap) {
@@ -2047,7 +2046,7 @@ html:not(.ie9) {
 
       .read-more {
         display: block;
-        margin-top: 25px;
+        margin-top: 15px;
         font-size: 13px;
         @include font-regular;
         transition: color 150ms linear;
@@ -2200,13 +2199,8 @@ html:not(.ie9) {
     &.box--typo-small .product-item .caption {
       padding: 0 30px 50px; 
 
-      .price {
-        margin-top: 5px;
-      }
-
-      .longarrow {
-        right: 30px;
-      }
+      .price { margin-top: 5px; }
+      .longarrow { right: 30px; }
     }
 
     .product-item {
@@ -2226,6 +2220,7 @@ html:not(.ie9) {
         }
 
         &.secondary {
+          display: none;
           position: absolute;
           top: 0;
           left: 0;
@@ -2255,9 +2250,7 @@ html:not(.ie9) {
 
         &:hover,
         &.hover {
-          .box--product-image {
-            transform: scale(1.1);
-          }
+          .box--product-image { transform: scale(1.1); }
 
           .longarrow {
             opacity: 1;
@@ -2279,9 +2272,7 @@ html:not(.ie9) {
         //   transform: translateY(-30px);
         // }
 
-        .secondary {
-          opacity: 1;
-        }
+        .secondary { opacity: 1; }
       }
 
       &:hover,
@@ -2292,9 +2283,7 @@ html:not(.ie9) {
       }
 
       @include at-query($max, $portable) {
-        .box--product-image {
-          transform: none !important;
-        }
+        .box--product-image { transform: none !important; }
 
         .caption {
           transform: none !important;
@@ -2473,38 +2462,35 @@ html:not(.ie9) {
     .caption {
       display: block;
       width: 100%;
+      margin-top: 10px;
 
       h3 {
         margin: 0 0 8px 0;
-        font-size: 18px;
+        font-size: 15px;
         line-height: 1.1;
         @include font-regular;
         text-align: center;
         overflow: hidden;
 
-        .overflowed {
-          transition: all 150ms linear 50ms;
-        }
+        .overflowed { transition: all 150ms linear 50ms; }
       }
 
       .caption__artist {
         @include font-thin;
-        font-size: 18px;
+        font-size: 15px;
         line-height: 1;
         text-align: center;
       }
 
       .price {
-        display: block;
-        font-size: 18px;
-        line-height: 1;
-        margin-top: 15px;
         overflow: hidden;
+        display: block;
+        margin-top: 10px;
+        font-size: 15px;
+        line-height: 1;
         text-align: center;
 
-        .overflowed {
-          transition: all 150ms linear 100ms;
-        }
+        .overflowed { transition: all 150ms linear 100ms; }
 
         del {
           opacity: .6;
@@ -2521,9 +2507,7 @@ html:not(.ie9) {
         transform: translateY(-50%);
         overflow: hidden;
 
-        .overflowed {
-          transition: all 150ms linear 150ms;
-        }
+        .overflowed { transition: all 150ms linear 150ms; }
       }
 
       // .overflowed {
@@ -2592,7 +2576,7 @@ html:not(.ie9) {
     @include bg();
     float: none;
     width: 100%;
-    padding: 40px;
+    padding: 20px 40px;
     font-size: 25px;
 
     @include at-query($max, $lap) {
@@ -2613,8 +2597,9 @@ html:not(.ie9) {
     .template-collection &.box--big:not(.fix-me-with-height-hard) {
       width: 100%;
       height: auto !important; 
-      //min-height: 100vh !important;
+      // min-height: 100vh !important;
       // padding: 100px 0;
+      padding-bottom: 0;
       text-align: center;
     }
 
@@ -2653,7 +2638,7 @@ html:not(.ie9) {
     .title {
       margin-bottom: 0;
       @include font-regular;
-      font-size: 36px;
+      font-size: 18px;
 
       &.dark { color: $whiteColor; }
 
@@ -2738,7 +2723,9 @@ html:not(.ie9) {
 
       .title {
         width: 100%;
-        font-size: 25px;
+        font-size: 18px;
+
+        a { color: $bodyAcc; }
       }
 
       p {
@@ -2750,18 +2737,12 @@ html:not(.ie9) {
       .button { margin-top: 35px; }
 
       @include at-query($max, $lap) {
-        .title {
-          font-size: rem(28px);
-        }
+        .title { font-size: rem(28px); }
       }
 
       @include at-query($max, $palm) {
-        .title {
-          font-size: rem(22px);
-        }
-        &.palm--box--small-fl .title {
-          font-size: rem(28px);
-        }
+        .title { font-size: rem(22px); }
+        &.palm--box--small-fl .title { font-size: rem(28px); }
       }
     }
 
@@ -2992,7 +2973,7 @@ html:not(.ie9) {
   // Rich text
   &.box__text {
     .site-box-content {
-      padding: 40px;
+      padding: 0 40px;
       max-width: 800px;
       
       @include at-query($max, $lap) {
@@ -3607,13 +3588,9 @@ html:not(.ie9) {
         width: 50px;
       }
 
-      p {
-        margin-bottom: 20px;
-      }
+      p { margin-bottom: 20px; }
 
-      .button {
-        margin-top: 40px;
-      }
+      .button { margin-top: 40px; }
     }
 
     .site-box-background.with-image {
@@ -4175,7 +4152,7 @@ html:not(.ie9) {
       -webkit-overflow-scrolling: touch;
 
       .top {
-        padding-top: 50px;
+        padding-top: 20px;
         position: relative;
       }
 
@@ -4186,10 +4163,10 @@ html:not(.ie9) {
       }
 
       .subtitle {
-        margin: 50px 0 0 0;
+        margin: 10px 0 0 0;
         border-top: 1px solid $bodyBgThird;
         border-bottom: 1px solid $bodyBgThird;
-        height: 70px;
+        padding: 10px 0;
         opacity: .66;
         display: flex;
         align-items: center;
@@ -4473,7 +4450,7 @@ $bar-spacing: 7px;
 }
 
 .site-footer {
-  padding: 60px 40px 40px;
+  padding: 40px;
   font-size: rem(13px);
   @include font-regular;
   color: $footerTxt;
@@ -4897,6 +4874,7 @@ $bar-spacing: 7px;
 }
 
 #CartTotal {
+  margin-bottom: 10px;
   @include font-regular;
   font-size: 24px;
 }
@@ -4932,8 +4910,6 @@ html:not(.ie9) .template-collection .box__heading {
   display: block;
   position: absolute;
   top: 30px; right: 30px;
-  width: 23px;
-  height: 23px;
   transition: opacity 150ms linear;
   z-index: 10;
 
@@ -4973,12 +4949,13 @@ html:not(.ie9) .template-collection .box__heading {
 }
 
 .filter-menu {
-  position: absolute;
-  width: 30px;
-  height: 20px;
-  top: 3px;
-  left: 0;
-  transition: all 150ms linear;
+  display: block;
+  font-family: 'Theinhardt';
+  font-weight: 500;
+  font-size: 12px !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #1d1823;
 
   .bar {
     width: 2px;
@@ -5161,27 +5138,24 @@ html:not(.ie9) .template-collection .box__heading {
 
   h1 {
     margin-bottom: 0;
-    font-size: 36px;
+    font-size: 24px;
     @include font-regular;
   }
 
   #product-vendor {
-    margin-bottom: 35px;
+    margin-bottom: 20px;
     @include font-thin;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 1;
   }
 
   #price {
     display: block;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     line-height: 1.2;
   }
 
-  #productPrice {
-    @include font-regular;
-    font-size: 36px;
-  }
+  #productPrice { font-size: 24px; }
 
   #comparePrice {
     font-size: rem(14px);
@@ -5190,21 +5164,22 @@ html:not(.ie9) .template-collection .box__heading {
   }
 
   .rte {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     @include font-thin;
     font-size: 18px;
     line-height: 1.3;
   }
 
-  select:not(.styled) {
-    display: none;
-  } // responsive
-  @include at-query($min, $lap+1) {
-    //position: fixed;
-    //margin-left: 50%;
-  }
+  select:not(.styled) { display: none; } 
+
+  // responsive
+  // @include at-query($min, $lap+1) {
+  //   position: fixed;
+  //   margin-left: 50%;
+  // }
   @include at-query($max, $lap) {
     text-align: center;
+
     .site-box-content {
       margin: 0 auto 60px !important;
       padding: 0;
@@ -5234,9 +5209,8 @@ html:not(.ie9) .template-collection .box__heading {
     font-size: 13px;
     @include font-thin;
     text-transform: uppercase;
-    &:after {
-      content: ":";
-    }
+
+    &:after { content: ":"; }
   }
 
   &.style--classic {
@@ -5302,9 +5276,7 @@ html:not(.ie9) .template-collection .box__heading {
         transition: color 0.2s;
       }
 
-      &:focus {
-        outline: none !important;
-      }
+      &:focus { outline: none !important; }
     }
 
     ul.color-true li {
@@ -5319,9 +5291,7 @@ html:not(.ie9) .template-collection .box__heading {
         font-size: 0;
       }
 
-      &:after {
-        display: none;
-      }
+      &:after { display: none; }
     }
   }
 }
@@ -5369,20 +5339,16 @@ html:not(.ie9) .template-collection .box__heading {
   }
 
   // TODO: Change this.
-  &:not(:first-child) { display: none!important; }
+  //&:not(:first-child) { display: none!important; }
 
   @media screen and (orientation: landscape) {
-    .animate & {
-      transition: all 300ms $easeInOutSine;
-    }
-    .expand & {
-      height: 100vh;
-    }
+    .animate & { transition: all 300ms $easeInOutSine; } 
+    .expand & { height: 100vh; }
   }
 }
 
 .gallery-index {
-
+  display: none!important;
   position: absolute;
   bottom: 65px;
   right: 0;
@@ -5394,14 +5360,15 @@ html:not(.ie9) .template-collection .box__heading {
   @include font-regular;
   cursor: default;
 
-  &.animate {
-    transition: all 300ms $easeInOutSine;
+  &.animate { transition: all 300ms $easeInOutSine; }
+
+  &.expand { right: 0 !important; } 
+
+  .box--can-stick.fixing-scroll-now & {
+    position: fixed;
+    right: 50%; 
   }
-  &.expand {
-    right: 0 !important;
-  } //.box--can-stick.fixing-scroll-now & {
-  position: fixed;
-  right: 50%; //}
+
   @include at-query($max, $lap) {
     display: none;
   }
@@ -5507,6 +5474,8 @@ html:not(.ie9) .template-collection .box__heading {
 .site-nav li.has-submenu a.active+.icon-go svg * {
   fill: $bodyAcc;
 }
+
+.product-zoom-in { cursor: pointer; }
 
 .product-zoom {
   position: fixed;
@@ -5913,22 +5882,16 @@ html:not(.ie9) .template-collection .box__heading {
     padding: 100px 0;
   }
 }
-
-.cart {
-  width: 100%;
-}
+.cart { width: 100%; }
 
 .cart-item {
-
   display: flex;
   margin-bottom: 50px;
   align-items: center;
   position: relative;
   padding-right: 100px;
 
-  #site-cart & {
-    margin-bottom: 40px;
-  }
+  #site-cart & { margin-bottom: 25px; }
 
   .thumbnail {
     display: block;
@@ -5940,9 +5903,7 @@ html:not(.ie9) .template-collection .box__heading {
       height: 102px;
     }
 
-    img {
-      vertical-align: middle;
-    }
+    img { vertical-align: middle; }
   }
 
   .content {
@@ -6023,9 +5984,7 @@ html:not(.ie9) .template-collection .box__heading {
   }
 }
 
-#cartSpecialInstructions {
-  margin-bottom: 40px;
-}
+#cartSpecialInstructions { margin-bottom: 10px; }
 
 .cart-out {
   span {
@@ -6530,12 +6489,9 @@ html:not(.ie9) .template-collection .box__heading {
   margin: 150px auto !important;
 }
 
-.new-block {
-  margin-top: 90px;
-}
+.new-block { margin-top: 90px; }
 
 .order-table {
-
   width: 100%;
   border: none;
 
@@ -6550,9 +6506,8 @@ html:not(.ie9) .template-collection .box__heading {
     font-size: rem(13px);
     opacity: .66;
     min-height: 20px;
-    &:first-child {
-      padding-left: 0;
-    }
+
+    &:first-child { padding-left: 0; }
   }
 
   th {
@@ -6721,12 +6676,9 @@ html:not(.ie9) .template-collection .box__heading {
   z-index: 99;
   color: $textMain !important;
 
-  &.sold span {
-    opacity: .66;
-  }
+  &.sold span { opacity: .66; }
 
   .box__product-content & {
-
     position: relative;
     display: inline-block;
     padding: 8px 10px 7px;
@@ -7002,12 +6954,27 @@ html:not(.ie9) .template-collection .box__heading {
 
 
 // Social media
+.social-media-title a {
+  display: flex;
+  align-items: center;
+
+  &:hover svg { fill: $bodyAcc; }
+
+  svg {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+}
+
 .social-media {
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 
   .social-media__container {
     display: flex;
     flex-wrap: wrap;
+    padding: 0 40px;
   }
 
   .box__heading .site-box-content {
@@ -7017,6 +6984,7 @@ html:not(.ie9) .template-collection .box__heading {
 
   .site-box.box--small { 
     width: 33.333%;
+    padding: 0;
 
     @include at-query($min, $portable) {
       width: 16.666%; 
@@ -7031,7 +6999,6 @@ html:not(.ie9) .template-collection .box__heading {
 
 // popup
 #shopify-section-popup {
-
   position: fixed;
   width: 100%;
   height: 100%;
@@ -7413,12 +7380,12 @@ html:not(.ie9) .template-collection .box__heading {
   }
 
   .contents {
-
     min-height: 200px;
     padding: 50px 30px 0;
 
-    >div {
+    > div {
       display: none;
+
       &.opened,
       &:first-child {
         display: block;
@@ -7428,12 +7395,9 @@ html:not(.ie9) .template-collection .box__heading {
 
   &[data-design="toggles"] {
 
-    .titles {
-      border: none;
-    }
+    .titles { border: none; }
 
     .titles h5 {
-
       border: 3px solid $bodyBgThird;
       margin-bottom: 24px;
       line-height: 54px;
@@ -7500,7 +7464,7 @@ html:not(.ie9) .template-collection .box__heading {
   }
 }
 
-.box__heading>.site-sharing {
+.box__heading > .site-sharing {
   display: none !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -7511,6 +7475,7 @@ html:not(.ie9) .template-collection .box__heading {
   @include at-query($max, $lap) {
     display: block !important;
     transition: all 300ms linear;
+
     &:not(.animate-owy) {
       opacity: 0 !important;
     }
@@ -7690,7 +7655,7 @@ html:not(.ie9) .template-collection .box__heading {
 
 @include at-query($min, $lap) {
   #shopify-section-home_slideshow + .mount-products {
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     background-color: $bodyBg;
   }
 }
@@ -7711,5 +7676,15 @@ html:not(.ie9) .template-collection .box__heading {
 
   @include at-query($min, $portable) {
     left: 40px;
+  }
+}
+
+#contact_form {
+  .input-group { display: flex; }
+
+  #Subscribe { 
+    line-height: 38px;
+    top: 0;
+    border: 0;
   }
 }

@@ -12,10 +12,16 @@
 
     <div class="site-box-content">
 
-      <h2 class="title">{{ section.settings.title }}</h2>
+      {% comment %} <h2 class="title">{{ section.settings.title }}</h2>
       {% unless section.settings.subtitle == blank %}
         <p>{{ section.settings.subtitle }}</p>
-      {% endunless %}
+      {% endunless %} {% endcomment %}
+      <h2 class="title social-media-title">
+        <a href="https://www.instagram.com/blink_art/">
+          {% include 'asset_svg' with 'social_instagram' %}
+          @blink_artworks
+        </a>
+      </h2>
 
     </div>
 

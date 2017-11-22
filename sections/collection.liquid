@@ -50,7 +50,7 @@
     </div>
   {% else %}
     <div class="site-box box--big lap--box--small-fl box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
-      <p class="shipping-text">Free Shipping</p>
+      <p class="shipping-text">Free UK Shipping</p>
       <div class="site-box-content {% if collection.image %} lap--dark {% endif %}">
         <h1 class="title {% if collection.image %} lap--dark {% endif %}">
           {{ collection.title }}
@@ -61,7 +61,8 @@
       </div>
       <button id="site-filter-handle" class="site-filter-handle" aria-label="{{ 'general.navigation.open_filters' | t }}">
         <span class="filter-menu" aria-hidden="true">
-          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        Sort By
+          {% comment %} <span class="bar"></span><span class="bar"></span><span class="bar"></span> {% endcomment %}
         </span>
       </button>
     </div>

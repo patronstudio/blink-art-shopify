@@ -8,7 +8,7 @@ assets/TheinhardtMedium-Regular.eot:
 assets/TheinhardtMedium-Regular.svg:
   development: 2017-11-14T11:43:01+00:00   1d200b611a99feb51bfde536c2d86de7
 assets/css_main.scss.liquid:
-  development: 2017-11-21T17:44:58+00:00   3356a9d425622956d2436ddbaa9995d6
+  development: 2017-11-22T20:24:35+00:00   b10132c527351b80dab2497360f0256b
 assets/css_naked.scss.liquid:
   development: 2017-10-20T14:19:17+01:00   f9f4c5fa90da5dc9da4571e2728e0b5a
 assets/css_noscript.scss.liquid:
@@ -22,7 +22,7 @@ assets/img_marker-dark.png:
 assets/img_marker-light.png:
   development: 2017-10-20T14:19:17+01:00   eadcca54143a766af0dd72e6cc4723aa
 assets/js_main.dev.js:
-  development: 2017-11-21T10:11:00+00:00   a368355fb91ddbbefcff92ffb32d5dd4
+  development: 2017-11-22T18:18:31+00:00   fc723acaffc0a1b14f0c01afaa7a1a01
 assets/js_main.min.js:
   development: 2017-10-23T16:46:26+01:00   9d1a64cb674e28a6000d23db6cb94e3e
 assets/js_plugins.min.js:
@@ -82,7 +82,7 @@ config/settings_schema.json:
 layout/theme.liquid:
   development: 2017-11-13T22:31:46+00:00   643769c486052f201ffc5354258a864d
 locales/en.default.json:
-  development: 2017-11-09T15:42:36+00:00   e22f74c658944eb4b48f5c5cf82c887a
+  development: 2017-11-22T18:26:03+00:00   9b05c056daff8c36a872d1e92c2d8772
 sections/article.liquid:
   development: 2017-11-16T15:43:31+00:00   1d5ba340db5de7d65139fed1e6733fd4
 sections/artist.liquid:
@@ -94,7 +94,7 @@ sections/blog.liquid:
 sections/blog_slideshow.liquid:
   development: 2017-11-13T10:50:59+00:00   b3cd90d7b76cc452f63b7e24fbe86825
 sections/collection.liquid:
-  development: 2017-11-21T17:34:52+00:00   9bc11700da47e2cb407fc2bf48958fc3
+  development: 2017-11-22T18:22:19+00:00   7fe6e5aad5b3fef5c88f4cccfd0fe175
 sections/contact.liquid:
   development: 2017-10-20T14:19:16+01:00   2e8ad39cf16c8a217e51ac54f7f3b9a7
 sections/footer.liquid:
@@ -112,7 +112,7 @@ sections/home_rich-text.liquid:
 sections/home_slideshow.liquid:
   development: 2017-11-17T10:14:03+00:00   10744e28f6c4cffa73000669c93f22c5
 sections/home_social-feed.liquid:
-  development: 2017-11-13T16:18:16+00:00   5f7236863dae462bed14d02858466437
+  development: 2017-11-22T17:12:40+00:00   0f90016209dc760ed3b0c61f3747d774
 sections/home_testimonials.liquid:
   development: 2017-10-20T14:19:16+01:00   1527cef3f342456ddcccab6985e104f2
 sections/home_video.liquid:
@@ -122,7 +122,7 @@ sections/intro-message.liquid:
 sections/popup.liquid:
   development: 2017-10-20T14:19:16+01:00   3f1b1868b50132d49814078c2b7aa664
 sections/product.liquid:
-  development: 2017-11-21T12:50:51+00:00   4143d9fb95f818beff81c3cef511ae90
+  development: 2017-11-22T18:18:06+00:00   9c9b87a37d83d64f0fa9f1a25ad42b15
 snippets/article_comments.liquid:
   development: 2017-10-20T14:19:18+01:00   fdcd0ccb744e036bffb815922e3b615c
 snippets/asset_svg.liquid:
@@ -132,7 +132,7 @@ snippets/blog_post-blank.liquid:
 snippets/blog_post-content.liquid:
   development: 2017-11-08T20:43:05+00:00   298ddc32346167d775a2846dce32897f
 snippets/cart_form.liquid:
-  development: 2017-11-15T12:05:44+00:00   2937ff4d6a0c2b56febb6ffb84e20c96
+  development: 2017-11-22T18:32:03+00:00   803d9c5000b8c12f0887324e02e71933
 snippets/collection_collection-content.liquid:
   development: 2017-10-20T14:19:19+01:00   3bdbdfc981f601d746c598cc996930e7
 snippets/collection_product-blank.liquid:
@@ -144,7 +144,7 @@ snippets/footer_content-contact.liquid:
 snippets/footer_content-menu.liquid:
   development: 2017-11-13T19:52:00+00:00   5994d753e6c1c6c0a6ab99f74c3a6ce1
 snippets/footer_content-newsletter.liquid:
-  development: 2017-11-21T12:00:57+00:00   52d2a01a0c4d39b6478c528722d544f4
+  development: 2017-11-22T17:07:57+00:00   52d2a01a0c4d39b6478c528722d544f4
 snippets/footer_content-payment.liquid:
   development: 2017-10-20T14:19:19+01:00   ae21e4a31164ee7de6a68074eab11e4b
 snippets/footer_content-social.liquid:
