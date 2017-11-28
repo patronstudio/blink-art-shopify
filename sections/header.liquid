@@ -74,27 +74,28 @@
     </button>
 
   </div>
-
-  <div class="sidebar-wrapper">
-    <div id="site-nav--mobile" class="site-nav style--sidebar">
-
-      {% include 'sidebar_content-menu' %}
-
-      {% if template.name == 'collection' %}
-        {% include 'sidebar_content-filters' %}
-      {% endif %}
-
-      {% include 'sidebar_content-cart' %}
-
-      {% include 'sidebar_content-search' %}
-
-      <button id="site-close-handle" class="site-close-handle" aria-label="{{ 'general.navigation.close_sidebar' | t }}" title="{{ 'general.navigation.close_sidebar' | t }}">
-        <span class="hamburger-menu active" aria-hidden="true"><span class="bar animate"></span></span>
-      </button>
-
-    </div>
-  </div>
 </header>
+
+{% comment %}Moved sidebar-wrapper outside of header{% endcomment%}
+<div class="sidebar-wrapper">
+  <div id="site-nav--mobile" class="site-nav style--sidebar">
+
+    {% include 'sidebar_content-menu' %}
+
+    {% if template.name == 'collection' %}
+      {% include 'sidebar_content-filters' %}
+    {% endif %}
+
+    {% include 'sidebar_content-cart' %}
+
+    {% include 'sidebar_content-search' %}
+
+    <button id="site-close-handle" class="site-close-handle" aria-label="{{ 'general.navigation.close_sidebar' | t }}" title="{{ 'general.navigation.close_sidebar' | t }}">
+      <span class="hamburger-menu active" aria-hidden="true"><span class="bar animate"></span></span>
+    </button>
+
+  </div>
+</div>
 
 {% schema %}
   {

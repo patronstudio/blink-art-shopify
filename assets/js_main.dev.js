@@ -178,6 +178,17 @@ if ($('body').hasClass('template-product')) {
         }
       });
 
+      if ( variant ) {
+        $galleryItem = $('.box__product-gallery').find('.gallery-item');
+
+        $galleryItem.each(function() {
+          $alt = $(this).find('img').attr('alt')
+          if ( $alt == 'detail' ) {
+            $(this).addClass('detail-image');
+          }
+        });
+      }
+
       selectCallback(variant);
 
       if (!firstTime) {
@@ -279,18 +290,22 @@ if ($('body').hasClass('template-product')) {
                   });
               }
             }
-
             // Default is to prependTo so the variant is shown at top
             // Our custom logic hides the our variants if it is not the "default" (first) option
             variantImg.show();
             variantImg.prependTo($('.box__product-gallery .site-box-content'));
+            //console.log(productSingleObject.variants[0].id, variant.id);
             if (productSingleObject.variants[0].id === variant.id) {
+              //console.log('show all images', productSingleObject.variants[0].id, variant.id);
               variantImg.siblings('.gallery-item').show();
               $('.gallery-index').show();
+              $('.has-variant-img').removeClass('active');
             } else {
+              //console.log('show single variant img, hide others', productSingleObject.variants[0].title);
               variantImg.siblings('.gallery-item').hide();
+              variantImg.addClass('active');
               $('.gallery-index').hide();
-            }
+            }              
           } else if (window.CUBER != undefined && variantImg.length > 0) {
             if (
               window.CUBER.Product.productFlkty != undefined &&
@@ -497,6 +512,7 @@ if ($('body').hasClass('template-product')) {
         $(this)
           .find('ul li')
           .on('click', function() {
+            //console.log('clicked variant');
             $(this)
               .parent()
               .parent()
@@ -624,8 +640,12 @@ window.blockStickyHeader = false;
 
   // Collection social media. 
   // If links are added to the description with the social media titles they will output icons.
-  if ( $('.template-collection').length > 0 ) {
-    var $slideshow = $('.box__slideshow-item .site-box-content');
+  var $collectionTemplate = $('.template-collection');
+  var $productTemplate = $('.template-product');
+  if ( $collectionTemplate.length > 0 || $productTemplate.length > 0 ) {
+    var $slideshow = $productTemplate.length > 0 
+      ? $('.product-artist__description')
+      : $('.box__slideshow-item .site-box-content');
 
     var linkIcon = function(type) {
       switch (type) {
@@ -661,6 +681,14 @@ window.blockStickyHeader = false;
     var $linksContainer = $('<div class="site-social" aria-label="Follow on social media" />');    
     $links.appendTo($linksContainer);
     $linksContainer.appendTo($slideshow);
+
+    // Lets remove some emty p tags from the WYSIWYG.
+    $('p', $slideshow).each(function() {
+      var $this = $(this);
+      if ( $this.html().replace(/\s|&nbsp;/g, '').length == 0 ) {
+        $this.remove();
+      }
+    }); 
   }
 
   // We start with the newsletter code (it needs to be wrapped inside a $(window).load() event function in order to get the perfect timeout after the site has completely loaded
@@ -1303,18 +1331,18 @@ window.blockStickyHeader = false;
 
         // init sliding gallery (always, because it turns into this at responsive)
 
-        this.$productCarousel.flickity({
-          cellSelector: '.gallery-item:not(.remove-from-flick)',
-          initialIndex:
-            window.CuberProductImageIndex != undefined
-              ? window.CuberProductImageIndex
-              : 0,
-          wrapAround: true,
-          prevNextButtons: false,
-          pageDots: true,
-          watchCSS: this.$productGallery.hasClass('scroll') ? true : false,
-          resize: true
-        });
+        // this.$productCarousel.flickity({
+        //   cellSelector: '.gallery-item:not(.remove-from-flick)',
+        //   initialIndex:
+        //     window.CuberProductImageIndex != undefined
+        //       ? window.CuberProductImageIndex
+        //       : 0,
+        //   wrapAround: true,
+        //   prevNextButtons: false,
+        //   pageDots: true,
+        //   watchCSS: this.$productGallery.hasClass('scroll') ? true : false,
+        //   resize: true
+        // });
 
         window.CUBER.Scroll.mount();
 

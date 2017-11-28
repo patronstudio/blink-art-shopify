@@ -1,13 +1,8 @@
 <div id="section-{{ section.id }}" class="site-box-container container--fullscreen box--can-stick" itemscope itemtype="//schema.org/Product" data-collection="{{ collection.handle }}" data-gallery-size="{{ product.images.size }}">
-  
-  {% assign count_variants = 0 %}
-  {% for variant in product.variants %}
-    {% assign count_variants = count_variants | plus: 1 %}
-  {% endfor %}
 
-	<div class="site-box box--big lap--box--bigger box--typo-big box--no-padding box__product-gallery {{ section.settings.gallery_style }}" data-lap="box--bigger" data-order="0" data-offset="{{ count_variants }}">
+	<div class="site-box box--big lap--box--bigger box--typo-big box--no-padding box__product-gallery {{ section.settings.gallery_style }}" data-lap="box--bigger" data-order="0">
 
-		<div class="site-box-content">
+		<div class="site-box-content flickity-enabled">
 
 			{% if product.images.size == 0 %}
 
@@ -24,8 +19,8 @@
           {% assign crop_img_url_large = '1440x' %}
           {% assign crop_img_url_huge= '1920x' %}
 
-          <div class="product-zoom-in box--product-image gallery-item" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
-            <img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt=" {{ image.alt }}">
+          <div class="product-zoom-in box--product-image gallery-item {% if image.attached_to_variant? %}has-variant-img{% else %}no-variant-img{% endif %}" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
+            <img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt="{{ image.alt }}">
           </div>
 
         {% endfor %}
