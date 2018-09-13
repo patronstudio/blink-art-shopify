@@ -40,7 +40,7 @@
               {% if collection.image %}
                 <div class="site-box-background-container">
                   <span class="site-box-background with-image {{ img_class }}" style="background-image: url({{ collection.image | img_url: '1920x' }});" aria-hidden="true"></span>
-                  <span class="site-box-black-overlay"></span>                
+                  {% comment %} <span class="site-box-black-overlay"></span>                 {% endcomment %}
                 </div>
               {% endif %}
             </div>
@@ -50,7 +50,7 @@
     </div>
   {% else %}
     <div class="site-box box--big lap--box--small-fl box--center-align box--column-flow box__heading box--add-hr" data-order="0" data-product-resize="{{ settings.thumb_resize }}" data-size="{{ collection.products.size }}">
-      <p class="shipping-text">Free UK Shipping</p>
+      <a href="https://blinkartworks.co.uk/pages/delivery-and-shippings-policy" class="shipping-text">Free UK Shipping</a>
       <div class="site-box-content {% if collection.image %} lap--dark {% endif %}">
         <h1 class="title {% if collection.image %} lap--dark {% endif %}">
           {{ collection.title }}

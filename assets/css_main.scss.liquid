@@ -485,13 +485,18 @@ http://flickity.metafizzy.co
 .flickity-viewport {
   overflow: hidden;
   position: relative;
-  height: 60vh;
+  min-height: 300px!important;
+
+  @include at-query($min, $lap+1) {
+    height: 60vh!important;
+    min-height: 500px!important;
+  }
 }
 
 .flickity-slider {
   position: absolute;
   width: 100%;
-  height: 60vh;
+  height: 100%;
 }
 
 .flickity-enabled.is-draggable {
@@ -1107,7 +1112,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .rte {
   font-size: 18px;
-
+  
+  .template-page &,
+  .template-page-fullwidth &,
   .template-article & {
     a { color: $bodyAcc; }
   }
@@ -1188,13 +1195,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 24px;
   }
 
-  &.dark {
-    color: $whiteColor;
-  }
+  &.dark { color: $whiteColor; }
+
   @include at-query($max, $lap) {
-    &.lap--dark {
-      color: $whiteColor;
-    }
+    &.lap--dark { color: $whiteColor; }
   }
 
   table {
@@ -1234,7 +1238,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .simple-title {
   text-transform: uppercase;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+
+  @include at-query($min, $lap+1) {
+    margin-bottom: 50px;
+  }
 
   &:after {
     content: "";
@@ -1259,9 +1267,7 @@ a {
   background 150ms linear;
 
   &:hover,
-  &.hover {
-    color: $bodyAcc;
-  }
+  &.hover { color: $bodyAcc; }
 }
 
 img {
@@ -1269,17 +1275,13 @@ img {
   height: auto;
 }
 
-iframe {
-  max-width: 100%;
-}
+iframe { max-width: 100%; }
 
 strong {
   @include font-regular;
 }
 
-em {
-  font-style: italic;
-}
+em { font-style: italic; }
 
 // inputs
 input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]) {
@@ -1303,9 +1305,7 @@ input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]) {
     color: #9B9B9B;
   }
 
-  .grid__item &:not([type="submit"]) {
-    width: 100%;
-  }
+  .grid__item &:not([type="submit"]) { width: 100%; }
 
   &:-webkit-autofill {
     box-shadow: 0 0 0px 1000px $bodyBgThird inset;
@@ -1313,12 +1313,9 @@ input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]) {
     color: $textMain;
   }
 
-  &:focus {
-    background: darken( $bodyBg, 3%);
-  }
-  .simple-grid &:focus {
-    border-color: $bodyBgThird;
-  }
+  &:focus { background: darken( $bodyBg, 3%); }
+
+  .simple-grid &:focus { border-color: $bodyBgThird; }
 }
 
 textarea {
@@ -1346,9 +1343,8 @@ textarea {
     color: $textMain;
   }
 
-  &:focus {
-    background: darken( $bodyBg, 3%);
-  }
+  &:focus { background: darken( $bodyBg, 3%); }
+  
   .simple-grid &:focus {
     background: $bodyBg;
     border-color: $bodyBgThird;
@@ -1411,19 +1407,11 @@ input[type="submit"],
     }
   }
 
-  svg * {
-    fill: $buttonTxt !important;
-  }
-  &.light svg * {
-    fill: $whiteColor !important;
-  }
-  &.dark svg * {
-    fill: $buttonBg !important;
-  }
+  svg * { fill: $buttonTxt !important; }
+  &.light svg * { fill: $whiteColor !important; }
+  &.dark svg * { fill: $buttonBg !important; }
   &:hover svg *,
-  &.hover svg * {
-    fill: $buttonTxt !important;
-  }
+  &.hover svg * { fill: $buttonTxt !important; }
 
   .no-touchevents &.with-icon:hover,
   .no-touchevents &.with-icon.hover {
@@ -1444,9 +1432,7 @@ input[type="submit"],
     border: 2px solid $buttonBg;
   }
   &.outline:hover,
-  &.outline.hover {
-    border: 2px solid transparent;
-  }
+  &.outline.hover { border: 2px solid transparent; }
 
   &.disabled {
     pointer-events: none;
@@ -1464,9 +1450,7 @@ input[type="submit"],
   }
 }
 
-input[type="number"] {
-  padding: 0 !important;
-}
+input[type="number"] { padding: 0 !important; }
 
 // basic typography
 
@@ -1490,19 +1474,10 @@ input[type="number"] {
 @mixin grid-item($namespace:"") {
   $prefix: '.' + $namespace;
 
-  #{$prefix}box--small {
-    width: 25%;
-  }
-  #{$prefix}box--small-lg {
-    width: 50%;
-  }
-  #{$prefix}box--small-fl {
-    width: 100%;
-  }
-  #{$prefix}box--big {
-    width: 50%; 
-    //min-height: 100vh;
-  }
+  #{$prefix}box--small { width: 25%; } 
+  #{$prefix}box--small-lg { width: 50%; } 
+  #{$prefix}box--small-fl { width: 100%; } 
+  #{$prefix}box--big { width: 50%; }
   #{$prefix}box--bigger {
     width: 100%; 
     //min-height: 100vh;
@@ -1554,6 +1529,13 @@ input[type="number"] {
 
 @mixin i-hate-ie() {
   @include at-query($min, $lap+1) {
+    &.box--big,
+    &.box--bigger {
+      height: 60vh;
+      width: 100%;
+    }
+  }
+  .template-article & {
     &.box--big,
     &.box--bigger {
       height: 60vh;
@@ -1643,14 +1625,10 @@ html:not(.ie9) {
   } 
   // Box design options
   &.box--no-padding {
-    .site-box-content {
-      width: 100%;
-    }
+    .site-box-content { width: 100%; }
   }
   &.box--small.box--no-padding {
-    .site-box-content {
-      height: 100%;
-    }
+    .site-box-content { height: 100%; }
   }
 
   @include at-query($min, $lap+1) {
@@ -1664,20 +1642,9 @@ html:not(.ie9) {
     }
   }
 
-  &.box--top-align {
-    justify-content: flex-start;
-  }
-  &.box--column-flow {
-    flex-direction: column;
-  }
-
-  &.box--align-center {
-    align-items: center;
-  }
-
-  &.box--image-show-half {
-    .site-box-content {}
-  }
+  &.box--top-align { justify-content: flex-start; } 
+  &.box--column-flow { flex-direction: column; } 
+  &.box--align-center { align-items: center; }
 
   .site-box-background {
     position: absolute;
@@ -1693,6 +1660,7 @@ html:not(.ie9) {
       @include sidebar-transition(left);
       &.sidebar-move {
         left: -480px;
+
         @include at-query($max, '640px') {
           left: -320px;
         }
@@ -1725,9 +1693,7 @@ html:not(.ie9) {
     }
 
     &:hover,
-    &.hover {
-      background: darken($bodyBg, 2%);
-    }
+    &.hover { background: darken($bodyBg, 2%); }
 
     .site-box-content {
       margin: auto;
@@ -1758,9 +1724,7 @@ html:not(.ie9) {
       display: block;
       margin: 0 auto -12px;
 
-      path {
-        fill: $textMain;
-      }
+      path { fill: $textMain; }
     }
   } 
   
@@ -1819,15 +1783,9 @@ html:not(.ie9) {
       .child {
         opacity: 0;
 
-        &:nth-child(1) {
-          transition: all 150ms $easeInOutSine;
-        }
-        &:nth-child(2) {
-          transition: all 150ms $easeInOutSine 50ms;
-        }
-        &:nth-child(3) {
-          transition: all 150ms $easeInOutSine 100ms;
-        }
+        &:nth-child(1) { transition: all 150ms $easeInOutSine; } 
+        &:nth-child(2) { transition: all 150ms $easeInOutSine 50ms; } 
+        &:nth-child(3) { transition: all 150ms $easeInOutSine 100ms; }
       }
     }
 
@@ -1946,12 +1904,14 @@ html:not(.ie9) {
       @include at-query($min, $lap) {
         width: 33.333%;
       }
+      
+      body.template-index & {
+        &:not(:first-child) {
+          display: none;
 
-      &:not(:first-child) {
-        display: none;
-
-        @include at-query($min, $lap) {
-          display: block;
+          @include at-query($min, $lap) {
+            display: block;
+          }
         }
       }
 
@@ -2592,17 +2552,11 @@ html:not(.ie9) {
         margin: 40px 0 0 0;
       }
 
-      @include at-query($max, $portable) {
-        .title {
-          font-size: 36px;
-          line-height: 1.2;
-        }
-      }
-
       @include at-query($max, $lap) {
         .title { 
-          font-size: 36px; 
+          font-size: 24px; 
           text-align: left;
+          line-height: 1.2;
         }
 
         &.box--add-hr .site-box-content:after { margin: 60px auto 0; }
@@ -2611,8 +2565,6 @@ html:not(.ie9) {
       }
 
       @include at-query($max, $palm) {
-        .title { font-size: 36px; }
-
         &.box--add-hr .site-box-content:after {
           margin-top: 40px;
           width: 40px;
@@ -2918,14 +2870,20 @@ html:not(.ie9) {
 
   // Split screen
   &.box__slideshow-split {
+    padding: 0;
     background: $bodyBg !important;
+
+    @include at-query($min, $portable+1) {
+      padding: 20px;
+    }
 
     &:not(.back-to-normal) .site-box-background-container {
       @include at-query($min, $portable+1) {
-
         @include sidebar-transition(transform);
+
         body.sidebar-move & {
           transform: translateX(-480px);
+
           @include at-query($max, '640px') {
             transform: translateX(-320px);
           }
@@ -2940,10 +2898,19 @@ html:not(.ie9) {
       width: 100%;
       height: 100%;
 
+      .slideshow-item__overlay {
+        display: block !important;
+        position: absolute;
+        top: 50%; left: 10%; right: 10%;
+        transform: translateY(-50%);
+        z-index: 9;
+
+        img { display: block; }
+      }
+
       .site-box.box--big {
         width: 100%;
         height: 100%;
-        min-height: 60vh;
         align-items: center;
         //@include i-hate-ie();
       }
@@ -3043,8 +3010,6 @@ html:not(.ie9) {
         }
 
         .site-box-black-overlay {
-          display: none;
-          
           content: "";
           position: absolute;
           top: 0;
@@ -3052,7 +3017,7 @@ html:not(.ie9) {
           width: 100%;
           height: 100%;
           background: black;
-          opacity: 0.2;
+          opacity: 0;
         }
       }
       
@@ -3093,8 +3058,6 @@ html:not(.ie9) {
         right: -100% !important;
 
         > div { clip: auto !important; }
-
-        .site-box-black-overlay { display: none; }
       }
 
       // .flickity-enabled .slideshow-item {
@@ -3151,8 +3114,6 @@ html:not(.ie9) {
       .slideshow-item {
         width: 100%;
         height: 100%;
-
-        .site-box-black-overlay { opacity: .4 !important; }
 
         .box__slideshow-item {
           width: 100%;
@@ -3697,14 +3658,12 @@ html:not(.ie9) {
   width: 27px;
   height: 22px;
   position: relative;
-  margin: 10px 11px 0;
+  margin: 13px 11px 0;
   overflow: visible;
   transition: opacity 150ms linear;
 
   @include at-query($min, $portable+1) {
-    .desktop-view--minimal & {
-      opacity: 1;
-    }
+    .desktop-view--minimal & { opacity: 1; }
   }
   @include at-query($max, $portable) {
     opacity: 1;
@@ -4331,7 +4290,7 @@ $bar-spacing: 7px;
     @include font-thin;
     width: 100%;
     background: $whiteColor !important;
-    color: $bodyBg !important;
+    color: $footerTxt !important;
     border-width: 1px 0 1px 1px;
     border-style: solid;
     border-color: $greyColor;
@@ -4551,7 +4510,8 @@ $bar-spacing: 7px;
 
   &.has-variant-img {
     padding-bottom: 0;
-    
+
+    &:first-child,
     &.active { padding-bottom: 75%; }
   }
 
@@ -4846,7 +4806,7 @@ html:not(.ie9) .template-collection .box__heading {
 
   &.slider .site-box-content { height: 100vh; }
 
-  &:after {
+  /*&:after {
     content: "";
     display: block;
     position: fixed;
@@ -4872,7 +4832,7 @@ html:not(.ie9) .template-collection .box__heading {
     @include at-query($max, $lap) {
       display: none;
     }
-  }
+  }*/
 }
 
 .box__product-content {
@@ -4894,7 +4854,6 @@ html:not(.ie9) .template-collection .box__heading {
 
   #section-product &.expand { opacity: 0; }
   .site-box-content {
-    padding: 100px 0;
     width: 100%;
     max-width: 800px;
   }
@@ -4931,6 +4890,15 @@ html:not(.ie9) .template-collection .box__heading {
     @include font-thin;
     font-size: 18px;
     line-height: 1.3;
+
+    @include at-query($min, $lap+1) {
+      width: 80%;
+    }
+
+    p { 
+      font-size: 14px; 
+      line-height: 1.5;
+    }
   }
 
   select:not(.styled) { display: none; } 
@@ -5079,12 +5047,16 @@ html:not(.ie9) .template-collection .box__heading {
   position: relative;
   width: 71px;
   height: 34px;
-  margin-left: 27px;
+  margin-left: 10px;
   padding: 0;
   text-align: center;
   border: 1px solid $blueColor;
   background-color: $whiteColor;
   color: $textMain!important;
+
+  @include at-query($min, $lap+1) {
+    margin-left: 27px;
+  }
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
@@ -5580,13 +5552,14 @@ html:not(.ie9) .template-collection .box__heading {
 .hidden { display: none; }
 
 //// CART
+#section-cart { padding: 10px 0 30px 0; }
 .site-box.box__cart {
   padding: 0 40px;
   border-left: 1px solid $bodyBgThird;
 
   .site-box-content {
     width: 100%;
-    padding: 100px 0;
+    max-width: 700px;
   }
 }
 .cart { width: 100%; }
@@ -6289,6 +6262,11 @@ html:not(.ie9) .template-collection .box__heading {
       text-align: left;
     }
 
+    span, p { 
+      font-size: 14px; 
+      line-height: 1.4;
+    }
+
     .site-social {
       margin-top: 20px;
 
@@ -6695,7 +6673,6 @@ html:not(.ie9) .template-collection .box__heading {
 
   @include at-query($max, $portable) {
     input[type="email"] { width: 100%; }
-    input[type="submit"] { margin-top: 10px; }
   }
 
   @media screen and (max-width: 768px) and (min-width: 480px) {
@@ -6774,7 +6751,7 @@ html:not(.ie9) .template-collection .box__heading {
     min-height: 0 !important;
     position: relative;
     top: auto !important;
-    padding: 150px 0 50px !important;
+    padding: 66px 0 56px !important;
     border: none;
 
     .site-box-content {
@@ -6783,8 +6760,13 @@ html:not(.ie9) .template-collection .box__heading {
       @include at-query($max, $portable) {
         max-width: 100%;
         width: 100% !important;
-        padding-left: 30px !important;
-        padding-right: 30px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+      }
+
+      @include at-query($min, $lap+1) {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
       }
 
       &:after {
@@ -6798,21 +6780,22 @@ html:not(.ie9) .template-collection .box__heading {
     }
 
     .title {
-      font-size: 36px;
+      font-size: 24px;
       text-align: left !important;
     }
   }
 
   .box__text {
     width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
     border: none;
-
+    
     @include at-query($max, $portable) {
       .site-box-content {
         max-width: 100%;
         width: 100%;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding: 0;
       }
     }
   }
@@ -7227,6 +7210,7 @@ html:not(.ie9) .template-collection .box__heading {
 
 .shipping-text {
   opacity: 1 !important;
+  display: inline-block;
   position: absolute;
   top: 30px; left: 30px;
   transform: translateY(-50%);
@@ -7236,6 +7220,7 @@ html:not(.ie9) .template-collection .box__heading {
   font-weight: 600;
   text-transform: uppercase;
   color: $textMain;
+  z-index: 10;
 
   @include at-query($min, $portable) {
     top: 40px; left: 40px;

@@ -1,7 +1,7 @@
 {% capture date_format %} {{ 'general.date_format' | t }} {% endcapture %}
 <a class="blog-item img-right" href="{{ article.url }}" title="{{ article.title }}" {% if article.image %} style="margin-top: -2px;" {% endif %}>
 
-	{% if article.image %} <span class="background" style="background-image: url({{ article.image.src | img_url: '960x1080', crop: 'center' }});" aria-hidden="true"></span> {% endif %}
+	{% if article.image %} <span class="background" style="background-image: url({{ article.image.src | img_url: '1920x1080', crop: 'center' }});" aria-hidden="true"></span> {% endif %}
 
 	<div class="content no-image">
 

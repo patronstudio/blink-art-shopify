@@ -20,7 +20,14 @@
           </a>
 
           {% unless item.variant.title contains 'Default' %}
-            <small>{{ item.variant.title }}</small>
+            {% assign variantTitle = item.variant.title | split: '|' %}
+            <small>
+            {% if item.variant.title != 'No Frame' %}
+              {{ variantTitle[1] | split: ' ' | first }}
+            {% else %}
+              {{ item.variant.title }}
+            {% endif %}
+            </small>
           {% endunless %}
 
           {% assign property_size = item.properties | size %}

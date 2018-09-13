@@ -28,15 +28,39 @@
           {% capture img_url %} {{ 'svg_lifestyle-X.svg' | replace: 'X', no | asset_url }} {% endcapture %}
           {% assign img_class = 'onboarding-slide' %}
         {% else %}
-          {% capture img_url %} {{ block.settings.bg_img | img_url: '1920x' }} {% endcapture %}
-          {% assign img_class = '' %}
+          {% assign img_class = 'background-image-' | append: block.id %}
+          {% assign landscape_url = block.settings.bg_img | img_url: '1920x' %}
+          {% assign portrait_url = block.settings.portrait_image | img_url: '768x' %}
         {% endif %}
 
-        <span class="site-box-background with-image {{ img_class }}" style="background-image: url({{ img_url }});" aria-hidden="true"></span>
+        <span class="site-box-background with-image {{ img_class }}" aria-hidden="true"></span>
 
+        {% if block.settings.overlay_graphic %}
+          <a href="{{ block.settings.overlay_graphic_link | default: '#' }}" class="slideshow-item__overlay">
+            <img src="{{ block.settings.overlay_graphic | img_url: '1920x' }}" alt="">
+          </a>
+        {% endif %}
+        
+        <span class="site-box-black-overlay" style="opacity:{{ block.settings.tint_opacity }} "></span>
   		</div>
   	</div>
 
 	</div>
 
 </div>
+
+<style type="text/css">
+
+  .site-box-background.with-image.{{ img_class }} {
+    background-image: url({{ portrait_url }});
+  }
+
+  @media (min-width: 1024px) {
+
+    .site-box-background.with-image.{{ img_class }} {
+      background-image: url({{ landscape_url }});
+    }
+
+  }
+
+</style>

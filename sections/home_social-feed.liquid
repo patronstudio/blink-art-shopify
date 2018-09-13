@@ -16,13 +16,14 @@
       {% unless section.settings.subtitle == blank %}
         <p>{{ section.settings.subtitle }}</p>
       {% endunless %} {% endcomment %}
-      <h2 class="title social-media-title">
-        <a href="https://www.instagram.com/blink_art/">
-          {% include 'asset_svg' with 'social_instagram' %}
-          @blink_artworks
-        </a>
-      </h2>
-
+      {% if settings.social_instagram != '' %}
+        <h2 class="title social-media-title">
+          <a href="{{ settings.social_instagram | escape }}" target="_blank" aria-label="Instagram">
+            {% include 'asset_svg' with 'social_instagram' %}
+            @blink_artworks
+          </a>
+        </h2>
+      {% endif %}
     </div>
 
   </div>

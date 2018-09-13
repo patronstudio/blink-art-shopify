@@ -1331,18 +1331,18 @@ window.blockStickyHeader = false;
 
         // init sliding gallery (always, because it turns into this at responsive)
 
-        // this.$productCarousel.flickity({
-        //   cellSelector: '.gallery-item:not(.remove-from-flick)',
-        //   initialIndex:
-        //     window.CuberProductImageIndex != undefined
-        //       ? window.CuberProductImageIndex
-        //       : 0,
-        //   wrapAround: true,
-        //   prevNextButtons: false,
-        //   pageDots: true,
-        //   watchCSS: this.$productGallery.hasClass('scroll') ? true : false,
-        //   resize: true
-        // });
+        this.$productCarousel.flickity({
+          cellSelector: '.gallery-item:not(.remove-from-flick)',
+          initialIndex:
+            window.CuberProductImageIndex != undefined
+              ? window.CuberProductImageIndex
+              : 0,
+          wrapAround: true,
+          prevNextButtons: false,
+          pageDots: true,
+          watchCSS: this.$productGallery.hasClass('scroll') ? true : false,
+          resize: true
+        });
 
         window.CUBER.Scroll.mount();
 
@@ -1397,7 +1397,6 @@ window.blockStickyHeader = false;
             'click',
             function(e) {
               // animation out
-
               $('#section-product')
                 .find('.site-box.box__product-content')
                 .addClass('animate');
@@ -1421,13 +1420,14 @@ window.blockStickyHeader = false;
               // object
 
               var $image = $('#product-zoomed-image img');
-
+              
               $image.attr(
                 'src',
-                $('.gallery-item')
-                  .eq(parseInt(this.$productGalleryIndex.html()) - 1)
-                  .find('img')
-                  .data('srcset')['huge']
+                // $('.gallery-item')
+                //   .eq(parseInt(this.$productGalleryIndex.html()) - 1)
+                //   .find('img')
+                //   .data('srcset')['huge']
+                $(e.target).find('img').data('srcset')['huge']
               );
 
               setTimeout(
@@ -3016,10 +3016,10 @@ window.blockStickyHeader = false;
 
           $(this).addClass('active');
 
-          if ($(this).find('.site-box-black-overlay').length <= 0) {
-            $(this).append('<span class="site-box-black-overlay" />');
-          }
-          slidesBlackArray.push($(this).find('.site-box-black-overlay'));
+          // if ($(this).find('.site-box-black-overlay').length <= 0) {
+          //   $(this).append('<span class="site-box-black-overlay" />');
+          // }
+          // slidesBlackArray.push($(this).find('.site-box-black-overlay'));
         });
 
         $(window)

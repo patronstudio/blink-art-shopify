@@ -2,23 +2,23 @@
 
   <div id="section-cart" class="site-box-container container--fullscreen box--can-stick">
 
-    <div class="site-box box__heading" data-order="0">
+    <div class="site-box box--center-align box__heading" data-order="0">
       <div class="site-box-content">
         <h1 class="title">{{ 'cart.title' | t }}</h1>
       </div>
     </div>
 
-    <div class="site-box box--bigger lap--box--bigger box--center-align box--column-flow box__cart" data-order="1">
+    <div class="site-box box--bigger lap--box--bigger box--column-flow box--center-align box__cart" data-order="1">
 
       {% if cart.item_count > 0 %}
 
-        <div class="site-box-content fix-me-with-margin">
+        <div class="site-box-content">
           {% include 'cart_form' with 'page' %}
         </div>
 
       {% else %}
 
-        <div class="site-box-content fix-me-with-margin">
+        <div class="site-box-content">
           <p>{{ 'cart.empty' | t }}</p>
           {{ 'cart.continue_browsing_html' | t }}
         </div>

@@ -98,7 +98,7 @@
 
 	{% endfor %}
 
-	{% if shop.customer_accounts_enabled %}
+	{% comment %} {% if shop.customer_accounts_enabled %}
 		<li class="login">
 			<a {% if link.active %} class="active"{% endif %} href="{% if customer %}/account{% else %}/account/login{% endif %}">
 				{% if customer %}
@@ -108,6 +108,6 @@
 				{% endif %}
 			</a>
 		</li>
-	{% endif %}
+	{% endif %} {% endcomment %}
 
 </ul>

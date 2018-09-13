@@ -10,7 +10,7 @@
     
     <div class="site-box box--big lap--box--small-fl box--typo-big box--center-align box--column-flow box__heading" data-order="0">
 
-      {% if article.image %} <span class="site-box-background" style="background-image: url({{ article.image.src | img_url: '960x1080', crop: 'center' }});" aria-hidden="true"></span> {% endif %}
+      {% if article.image %} <span class="site-box-background" style="background-image: url({{ article.image.src | img_url: '1920x1080', crop: 'center' }});" aria-hidden="true"></span> {% endif %}
 
       {% comment %} {% if section.settings.site_sharing %}
         {% include 'social_sharing' %}

@@ -14,13 +14,13 @@
 
 				{% for image in product.images %}
 
-          {% assign crop_img_url_small = '480x' %}
+          {% comment %} {% assign crop_img_url_small = '480x' %} {% endcomment %}
           {% assign crop_img_url_medium = '960x' %}
           {% assign crop_img_url_large = '1440x' %}
           {% assign crop_img_url_huge= '1920x' %}
 
           <div class="product-zoom-in box--product-image gallery-item {% if image.attached_to_variant? %}has-variant-img{% else %}no-variant-img{% endif %}" data-index="{{ forloop.index0 }}" {% if image.attached_to_variant? %} data-variant-img="{{ image.variants[0].featured_image.id }}"{% endif %}>
-            <img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_small }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt="{{ image.alt }}">
+            <img data-image-id="{{ image.id }}" src="{{ image.src | img_url: crop_img_url_small }}" data-srcset='{"small": "{{ image.src | img_url: crop_img_url_medium }}", "medium": "{{ image.src | img_url: crop_img_url_medium }}", "large": "{{ image.src | img_url: crop_img_url_large }}", "huge": "{{ image.src | img_url: crop_img_url_huge }}"}' alt="{{ image.alt }}">
           </div>
 
         {% endfor %}
@@ -47,7 +47,7 @@
 
     {% comment %} {% include 'product_breadcrumb' %} {% endcomment %}
 
-    <div class="site-box-content fix-me-with-margin">
+    <div class="site-box-content">
       {% assign productTitle = product.title | split: '|' %}
       <h1 itemprop="name">{{ productTitle[0] }}</h1>
 
@@ -143,10 +143,10 @@
 {% if collections[collectionName].title %}
   <div id="product-artist" class="site-box-container container--fullscreen">
     {% if collections[collectionName].image %}
-      <div class="product-artist__image" style="background-image: url({{ collections[collectionName].image | img_url: '150x' }});" aria-hidden="true"></div>
+      <div class="product-artist__image" style="background-image: url({{ collections[collectionName].image | img_url: '300x' }});" aria-hidden="true"></div>
     {% endif %}
     <div class="product-artist__details">
-        <h2 class="product-artist__title">{{ collections[collectionName].title | link_to: collections[collectionName].handle }}</h2>
+        <h2 class="product-artist__title">{{ collections[collectionName].title }}</h2>
         {% unless collections[collectionName].description == blank %}
           <div class="product-artist__description">{{ collections[collectionName].description }}</div>
         {% endunless %}
